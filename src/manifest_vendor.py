@@ -10,7 +10,15 @@ from data import my_api_key, token, root
 
 
 hash_vendor = {
-    'DestinyVendorDefinition': 'hash'
+    'DestinyVendorDefinition': 'hash',
+}
+
+hash_location = {
+    'DestinyLocationDefinition': 'index'
+}
+
+hash_item = {
+    'DestinyInventoryItemDefinition': 'hash'
 }
 
 
@@ -32,14 +40,15 @@ def get_manifest():
         name = zip.namelist()
         zip.extractall()
     print(name[0])
-    os.replace(name[0], 'Manifest.content')
+    os.replace(name[0], '../pickle/Manifest.content')
+    os.remove('MANZIP')
     print('Unzipped')
 
 
 # Build the dictionary of all the vendors (CF DestinyVendorDefinition)
 def build_dict(hash_dict):
     # connect to the manifest
-    con = sqlite3.connect('manifest.content')
+    con = sqlite3.connect('../pickle/manifest.content')
     print('Connected')
     # create a cursor object
     cur = con.cursor()
@@ -59,6 +68,9 @@ def build_dict(hash_dict):
 
         # create a dictionary with the hashes as keys
         # and the jsons as values
+        if table_name == 'DestinyInventoryItemDefinition':
+            all_data[table_name] = vendor_jsons
+            return all_data
         vendor_dict = {}
         hash = hash_dict[table_name]
         for vendor in vendor_jsons:
@@ -73,14 +85,44 @@ def build_dict(hash_dict):
 
 # Build the vendor dictionary and create manifest.pick if it doesn't exist and returns the dicctionary
 def vendor_dic():
-    if not os.path.isfile(r'manifest_vendor.pickle'):
+    if not os.path.isfile(r'../pickle/manifest_vendor.pickle'):
         get_manifest()
         all_data = build_dict(hash_vendor)
-        with open('manifest_vendor.pickle', 'wb') as data:
+        with open('../pickle/manifest_vendor.pickle', 'wb') as data:
             pickle.dump(all_data, data)
-            print("'manifest_vendor.pickel' created")
+            print("'manifest_vendor.pickel' Created")
     else:
-        print("'manifest_vendor.pickle' exists")
-    with open('manifest_vendor.pickle', 'rb') as data:
+        print("'manifest_vendor.pickle' Exists")
+    with open('../pickle/manifest_vendor.pickle', 'rb') as data:
+        all_data = pickle.load(data)
+    return all_data
+
+
+def item_dic():
+    # check if pickle exists, if not create one.
+    if not os.path.isfile(r'../pickle/manifest_item.pickle'):
+        get_manifest()
+        all_data = build_dict(hash_item)
+        with open('../pickle/manifest_item.pickle', 'wb') as data:
+            pickle.dump(all_data, data)
+            print("'manifest_item.pickle' Created")
+    else:
+        print("'manifest_item.pickle' Exists")
+    with open('../pickle/manifest_item.pickle', 'rb') as data:
+        all_data = pickle.load(data)
+    return all_data
+
+
+def location_dic():
+    # check if pickle exists, if not create one.
+    if not os.path.isfile(r'../pickle/manifest_location.pickle'):
+        get_manifest()
+        all_data = build_dict(hash_location)
+        with open('../pickle/manifest_location.pickle', 'wb') as data:
+            pickle.dump(all_data, data)
+            print("'manifest_location.pickle' Created")
+    else:
+        print("'manifest_location.pickle' Exists")
+    with open('../pickle/manifest_location.pickle', 'rb') as data:
         all_data = pickle.load(data)
     return all_data

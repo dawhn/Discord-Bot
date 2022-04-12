@@ -133,3 +133,6 @@ Manifest.content
 manifest_item.pickle
 manifest_vendor.pickle
 MANZIP
+data.py
+cert/*
+pickle/*
