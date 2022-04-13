@@ -14,11 +14,16 @@ hash_vendor = {
 }
 
 hash_location = {
-    'DestinyLocationDefinition': 'index'
+    'DestinyLocationDefinition': 'index',
+    'DestinyDestinationDefinition': 'hash'
 }
 
 hash_item = {
-    'DestinyInventoryItemDefinition': 'hash'
+    'DestinyInventoryItemDefinition': 'hash',
+}
+
+hash_perk = {
+    'DestinySandBoxPerkDefinition': 'hash'
 }
 
 
@@ -109,6 +114,20 @@ def item_dic():
     else:
         print("'manifest_item.pickle' Exists")
     with open('../pickle/manifest_item.pickle', 'rb') as data:
+        all_data = pickle.load(data)
+    return all_data
+
+
+def perk_dic():
+    if not os.path.isfile(r'../pickle/manifest_perk.pickle'):
+        get_manifest()
+        all_data = build_dict(hash_perk)
+        with open('../pickle/manifest_perk.pickle', 'wb') as data:
+            pickle.dump(all_data, data)
+            print("'manifest_perk.pickle' Created")
+    else:
+        print("'manifest_perk.pickle' Exists")
+    with open('../pickle/manifest_perk.pickle', 'rb') as data:
         all_data = pickle.load(data)
     return all_data
 
