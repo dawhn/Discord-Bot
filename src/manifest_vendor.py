@@ -1,3 +1,5 @@
+# File containing every functions that are necessary to create every dictionary needed based on the manifest
+
 import json
 import os
 import pickle
@@ -19,11 +21,20 @@ hash_location = {
 }
 
 hash_item = {
-    'DestinyInventoryItemDefinition': 'hash',
+    'DestinyInventoryItemDefinition': 'hash'
+}
+
+hash_sub_type = {
+    'DestinyItemSubType': ''
 }
 
 hash_perk = {
-    'DestinySandBoxPerkDefinition': 'hash'
+    'DestinySandBoxPerkDefinition': 'hash',
+    'DestinyStatDefinition': 'hash'
+}
+
+hash_activity = {
+    'DestinyActivityDefinition': 'hash'
 }
 
 
@@ -73,7 +84,7 @@ def build_dict(hash_dict):
 
         # create a dictionary with the hashes as keys
         # and the jsons as values
-        if table_name == 'DestinyInventoryItemDefinition':
+        if table_name == 'DestinyInventoryItemDefinition' or table_name == 'DestinyItemSubType':
             all_data[table_name] = vendor_jsons
             return all_data
         vendor_dict = {}
@@ -143,5 +154,34 @@ def location_dic():
     else:
         print("'manifest_location.pickle' Exists")
     with open('../pickle/manifest_location.pickle', 'rb') as data:
+        all_data = pickle.load(data)
+    return all_data
+
+
+def item_type():
+    if not os.path.isfile(r'../pickle/manifest_item_type.pickle'):
+        get_manifest()
+        all_data = build_dict(hash_sub_type)
+        with open('../pickle/manifest_item_type.pickle', 'wb') as data:
+            pickle.dump(all_data, data)
+            print("'manifest_item_type.pickle' Created")
+    else:
+        print("'manifest_location.pickle' Exists")
+    with open('../pickle/manifest_item_type.pickle', 'rb') as data:
+        all_data = pickle.load(data)
+    return all_data
+
+
+def activity_dic():
+    # check if pickle exists, if not create one.
+    if not os.path.isfile(r'../pickle/manifest_activity.pickle'):
+        get_manifest()
+        all_data = build_dict(hash_activity)
+        with open('../pickle/manifest_activity.pickle', 'wb') as data:
+            pickle.dump(all_data, data)
+            print("'manifest_activity.pickle' Created")
+    else:
+        print("'manifest_location.pickle' Exists")
+    with open('../pickle/manifest_activity.pickle', 'rb') as data:
         all_data = pickle.load(data)
     return all_data

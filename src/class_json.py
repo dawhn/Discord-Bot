@@ -53,13 +53,13 @@ class Player:
         self.error_status = None
         self.message = None
         self.exception = None
-        self.characters_id = []
+        self.characters_ids = []
 
         # Data about the user
         self.name = None
         self.name_code = None
         self.membership_types = []
-        self.membership_id = None
+        self.membership_ids = []
         if self.status == 200:
             res = response.json()
             self.error_code = res['ErrorCode']
@@ -69,9 +69,10 @@ class Player:
                 try:
                     self.name = res['Response'][0]['bungieGlobalDisplayName']
                     self.name_code = res['Response'][0]['bungieGlobalDisplayNameCode']
-                    self.membership_id = res['Response'][0]['membershipId']
+                    for item in res['Response']:
+                        self.membership_ids.insert(0, item['membershipId'])
                     for item in res['Response'][0]['applicableMembershipTypes']:
-                        self.membership_types.append(item)
+                        self.membership_types.insert(0, item)
                     self.membership_types = res['Response'][0]['applicableMembershipTypes']
                 except Exception as ex:
                     print("Player 200 status and error_code 1 but no data to retrieve for fields")

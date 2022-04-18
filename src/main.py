@@ -1,14 +1,8 @@
 # Discord Bot
 
 # imports
-import os
-import pickle
-import sqlite3
 import threading
-import zipfile
-import json
 import discord
-import discord_slash.utils.manage_components
 import requests
 
 # from imports
@@ -21,13 +15,14 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 # from discord_components import Button, DiscordComponents, Select
 
 # file imports
-import class_json
 import embed
+import player_stats
 import server_application
 
 # from file imports
 from data import token, my_api_key, root, icon_root
 from manifest_vendor import vendor_dic, item_dic, location_dic, perk_dic
+from perks_data import DestinyItemSubType
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -58,8 +53,7 @@ async def on_message(msg):
 
 # Launch the bot
 # Start a new thread and launch the server on localhost:8000 on this new thread
-# TODO: Launch a single request with arguments to automatically connect with my Bungie account in order to avoid
-# TODO: the manual connection every launch or every hour later
+# TODO: Do somthing with the refresh_token (might allow to not have to repeat the whole process again but skip parts)
 @myBot.event
 async def on_ready():
     threading.Thread(target=run_flask).start()
@@ -72,26 +66,9 @@ async def on_ready():
     vendor_dic()
     location_dic()
     vendor_embeds.append(sales_vendor('Banshee-44'))
-    # xur_embeds.append(sales_vendor('Xûr'))
+    vendor_embeds.append(sales_vendor('Xûr'))
     print('Logged in as')
     print(myBot.user.name + '\n')
-
-
-# Get Player data
-# By searching player with its bungie name
-def player(bungie_name: str) -> class_json.Player:
-    me = server_application.me
-    data = bungie_name.split("#")
-    url = root + 'SearchDestinyPlayerByBungieName/' + 'all' + '/'
-    header = {"X-API-Key": my_api_key,
-              "Authorization": access_token + me.token['access_token']}
-
-    body = {"displayName": data[0], "displayNameCode": data[1]}
-    response = requests.post(url, headers=header, json=body)
-    p = class_json.Player(response)
-    if p.status != 200 or p.error_code != 1 or p.exception is not None:
-        return None
-    return p
 
 
 # Get Banshee-44 sales data
@@ -134,8 +111,21 @@ async def xur(msg: SlashContext):
         await inter.edit_origin(embed=vendor_embeds[1][pos], components=[action_row[pos]])
 
 
+# Get player's data
+# For now, only player's raid data is retrieved
+@slash.slash(name="Stats",
+             description="Get player stats")
+async def stats(msg: SlashContext):
+    await msg.defer()
+    name = "Dawhn#0621"
+    p = player_stats.player(name)
+    raid_data = player_stats.get_all_raids(p)
+    raid_data.sort()
+    await msg.send(embed=embed.raid_stats_embed(raid_data, name))
+
+
 # Build 2 embed and return them:
-# - First one is general with overall informations about the vendor sales
+# - First one is general with overall information about the vendor sales
 # - Second one is more specific (with perks, locations ...)
 def sales_vendor(name: str):
     vendor_hash, large_icon, original_icon, destinations = get_vendor(name)
@@ -164,8 +154,13 @@ def sales_vendor(name: str):
         for item_l in item_list:
             if item['hash'] == item_l[0] and (item['itemType'] == 3 or item['itemType'] == 26 or item['itemType'] == 2):
                 if item['itemType'] == 3:
-                    items_number.append((item['displayProperties']['name'], item_l[1]))
-                i = (item['displayProperties']['name'], item['itemType'], item['inventory']['tierType'])
+                    sub_type = item['itemSubType']
+                    type_name = ''
+                    for name_, type_id in DestinyItemSubType.items():
+                        if sub_type == type_id:
+                            type_name = name_
+                    items_number.append((item['displayProperties']['name'], item_l[1], type_name))
+                i = (item['displayProperties']['name'], item['itemType'], item['inventory']['tierType'], item_l[1])
                 items.append(i)
 
     details = get_details(vendor_hash, original_icon, destinations, name, items, items_number)
@@ -191,7 +186,7 @@ def get_items_perks(vendor_hash: str, items: [()]):
 
     items_perks = []
     for item in items:
-        items_perks.append([item[1], item[0]])
+        items_perks.append([item[1], item[0], item[2]])
 
     for perk in perks:
         i = 0
@@ -212,6 +207,53 @@ def get_items_perks(vendor_hash: str, items: [()]):
     return items_perks
 
 
+# Get all stats for each armor sold by the vendor
+def get_all_stats(vendor_hash: str, items: []):
+    me = server_application.me
+    perk_dictionary = perk_dic()
+    header = {"X-API-Key": my_api_key,
+              "Authorization": access_token + me.token['access_token']}
+
+    path = root + str(me.membership_types[0]) + '/Profile/' + str(me.membership_ids[0]) + '/Character/' + str(
+        me.character_ids[0]) + '/Vendors/' + str(vendor_hash) + '/?components=304'
+
+    r = requests.get(path, headers=header)
+    resp = r.json()
+    stats_ = resp['Response']['itemComponents']['stats']['data'].items()
+
+    all_stats = []
+
+    for stat in stats_:
+        curr_stats = []
+        found = False
+        stop = False
+        for hash_stat in stat[1]['stats']:
+            for stat_hash, item_stat in perk_dictionary['DestinyStatDefinition'].items():
+                if stat_hash == int(hash_stat):
+                    name = item_stat['displayProperties']['name']
+                    if name == 'Mobility' or name == 'Resilience' or name == 'Recovery' or name == 'Discipline' or \
+                            name == 'Intellect' or name == 'Strength':
+                        if not found:
+                            item_name = ""
+                            item_rarity = 0
+                            for item in items:
+                                if item[3] == int(stat[0]):
+                                    item_name = item[0]
+                                    item_rarity = item[2]
+                            if item_rarity != 6:
+                                stop = True
+                            if not stop:
+                                curr_stats.append(item_name)
+                            # curr_stats.append(item_rarity)
+                            found = True
+                        if not stop:
+                            if found and curr_stats[0] != '':
+                                curr_stats.append((item_stat['displayProperties']['name'], stat[1]['stats'][hash_stat]['value']))
+        if found and not stop:
+            all_stats.append(curr_stats)
+    return all_stats
+
+
 # get the details of the current vendor (change depending which vendor we are on)
 # return an emebed message containing these details
 def get_details(vendor_hash, original_icon: str, destinations: [], name: str, items: [], items_number: [()]):
@@ -220,7 +262,8 @@ def get_details(vendor_hash, original_icon: str, destinations: [], name: str, it
     if name == 'Banshee-44':
         return embed.gunsmith_detail_embed(items_perks, original_icon)
     if name == 'Xûr':
-        return embed.xur_detail_embed(items, original_icon, index)
+        stats_ = get_all_stats(vendor_hash, items)
+        return embed.xur_detail_embed(items, original_icon, index, items_perks, stats_)
 
 
 # get the destination of the current vendor amongst every destination he can be in (might not work for xur)

@@ -1,3 +1,5 @@
+# File containing every functions that are necessary to get the access token
+
 from flask import Flask, request
 import flask
 import time
@@ -93,6 +95,7 @@ def redirect():
 
     r = requests.post('https://www.bungie.net/platform/app/oauth/token/', data=data_, headers=headers)
     resp = r.json()
+    print(resp)
     data.auth_token = resp['access_token']
 
     me.token = {
