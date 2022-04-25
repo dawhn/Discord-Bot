@@ -1,18 +1,22 @@
-# Discord Bot
+# Discord Bot main file
 
 # imports
+import datetime
 import threading
+import time
+
 import discord
+import pandas as pd
 import requests
 
 # from imports
 from discord.ext import commands
-# from discord_ui import Button
 from discord_slash import SlashCommand, SlashContext
 from discord_slash.model import ButtonStyle
-from discord_slash.utils.manage_components import create_button, create_actionrow, wait_for_component
+from discord_slash.utils.manage_components import create_button, create_actionrow, wait_for_component, create_select, \
+    create_select_option
+from discord_slash.utils.manage_commands import create_option
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-# from discord_components import Button, DiscordComponents, Select
 
 # file imports
 import embed
@@ -48,7 +52,12 @@ async def on_message(msg):
     if msg.content.startswith("salut"):
         await msg.channel.send("salu")
     if msg.content.startswith("test"):
-        r = requests.get('https://127.0.0.1:8000/', verify=False)
+        r = requests.get('https://127.0.0.1:8000/refresh_url', verify=False)
+
+
+# Send request to the server to refresh the acccess_token of the application
+def refresh_token():
+    requests.get('https://127.0.0.1:8000/refresh_url', verify=False)
 
 
 # Launch the bot
@@ -58,10 +67,20 @@ async def on_message(msg):
 async def on_ready():
     threading.Thread(target=run_flask).start()
     await myBot.change_presence(activity=discord.Game(name="Ratio", type=discord.ActivityType.listening))
-    me = server_application.me
-    while me.token == {}:
+    if not server_application.get_stored_informations():
+        # if data is not stored in the csv file, get the data by connecting to the server and bungie.net
         me = server_application.me
-        continue
+        print("Connect to https://127.0.0.1:8000/ to authorize the app and get the access_token")
+        while me.token == {}:
+            me = server_application.me
+            continue
+        # create CSV file and write it to store it and reused it next time the bot logs in
+        data_ = {'access_token': [me.token['access_token']],
+                 'access_expires': [me.token['access_expires']],
+                 'refresh_token': [me.token['refresh_token']],
+                 'refresh_expires': [me.token['refresh_expires']]}
+        df = pd.DataFrame(data_)
+        df.to_csv('../data.csv')
     item_dic()
     vendor_dic()
     location_dic()
@@ -112,16 +131,50 @@ async def xur(msg: SlashContext):
 
 
 # Get player's data
-# For now, only player's raid data is retrieved
+# For now, only player's raid, dungeon and grandmaster nightfall data is retrieved
 @slash.slash(name="Stats",
-             description="Get player stats")
-async def stats(msg: SlashContext):
+             description="Get player stats",
+             options=[
+                 create_option(
+                     name="bungie_name",
+                     description="Bungie name of the player",
+                     required=True,
+                     option_type=3
+                 )
+             ])
+async def stats(msg: SlashContext, bungie_name: str):
     await msg.defer()
-    name = "Dawhn#0621"
-    p = player_stats.player(name)
+    me = server_application.me
+    if time.time() > me.token['refresh_expires']:
+        print("REFRESH CODE EXPIRE ONE YEAR AS PASSED")
+    if time.time() > me.token['access_expires']:
+        refresh_token()
+    p = player_stats.player(bungie_name)
+
     raid_data = player_stats.get_all_raids(p)
+    dungeon_data = player_stats.get_all_dungeons(p)
+    gm_data = player_stats.get_all_gms(p)
+    dungeon_data.sort()
     raid_data.sort()
-    await msg.send(embed=embed.raid_stats_embed(raid_data, name))
+    raid_embed = embed.raid_stats_embed(raid_data, bungie_name)
+    dungeon_embed = embed.dungeon_stats_embed(dungeon_data, bungie_name)
+    gm_embed = embed.gm_stats_embed(gm_data, bungie_name)
+    data_embed = [raid_embed, dungeon_embed, gm_embed]
+
+    select = create_select(
+        options=[
+            create_select_option("Raid", value='0'),
+            create_select_option("Dungeon", value="1"),
+            create_select_option("Grandmaster", value="2")
+        ],
+        placeholder="Choose your option"
+    )
+    action_row = create_actionrow(select)
+    await msg.send(embed=data_embed[0], components=[action_row])
+    while 1:
+        inter = await wait_for_component(myBot, components=[action_row])
+        pos = int(inter.values[0])
+        await inter.edit_origin(embed=data_embed[pos], components=[action_row])
 
 
 # Build 2 embed and return them:
@@ -130,6 +183,8 @@ async def stats(msg: SlashContext):
 def sales_vendor(name: str):
     vendor_hash, large_icon, original_icon, destinations = get_vendor(name)
     me = server_application.me
+    if time.time() > me.token['access_expires']:
+        refresh_token()
 
     header = {"X-API-Key": my_api_key,
               "Authorization": access_token + me.token['access_token']}

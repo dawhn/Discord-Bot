@@ -15,6 +15,11 @@ Every secret token or just some usefull data is in data.py (not in this reposito
 - /banshee: Added perks name for each item sold by banshee in the detailed window.
 
 ### V 1.2
-- /xur: added items details (now show all weapons main perks and exotic armor first and second hight stat aswell as xur current location, reflected by the picture and the text in the bottom).
+- /xur: added items details (now show all weapons main perks and exotic armor first and second highests stat aswell as xur current location, reflected by the picture and the text in the bottom).
 - Added emoji corresponding to each perk and stat (not complete) and replace perks name by their emoji on /banshee to make it clearer for the reader.
 - /stats command: return number of clear for each raid done by one account (only works with my account for now).
+
+### V 1.3
+- /stats: added select button to chose between Raids, Dungeons and Grandmaster Nightfalls for the requested account.
+- added refresh_url root to the local server. Which allow to retrieve the access token without requiring to get the authorization code again. It is checked automatically when calling an API endpoint.
+- Now only have to authorize the application once. When it is done, access_token and refresh_token with both their expiration date are stored in data.csv which can on the next launch of the bot be retrieved and keep on working without needing to authorize the application again.

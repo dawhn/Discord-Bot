@@ -9,7 +9,7 @@ from perks_data import all_perks
 tower_jpg = 'https://cdn.discordapp.com/attachments/963544576193355837/963546618475479060/tower.jpg'
 nessus_jpg = 'https://cdn.discordapp.com/attachments/963544576193355837/963546607725461534/nessus.jpg'
 edz_jpg = 'https://cdn.discordapp.com/attachments/963544576193355837/963546597134835812/edz.jpg'
-image_destinations = [tower_jpg, nessus_jpg, edz_jpg]  # change order to match xur's order
+image_destinations = [tower_jpg, edz_jpg, nessus_jpg]  # change order matching xur's order
 name_destinations = ['The Tower, Hangar', 'EDZ, Winding Cove', 'Nessus, Watcher\'s Grave']
 
 
@@ -188,13 +188,14 @@ def raid_stats_embed(raid: [], bungie_name: str):
     for activity in raid:
         name += '> ' + activity[0] + '\n'
         count += str(activity[1]) + '\n'
+    name_, id_ = bungie_name.split('#')
     embed = discord.Embed(
         title="**" + bungie_name + "**",
-        description="Summary of player's raid",
+        description="Summary of " + name_ + "'s raid",
         color=discord.Color.dark_purple()
     )
     embed.add_field(name="__Raid__", value=name)
-    embed.add_field(name="__Number__", value=count)
+    embed.add_field(name="__Clears__", value=count)
     embed.set_image(url='https://media.discordapp.net/attachments/963544576193355837/964988469296369694/unknown.png')
 
     today = datetime.datetime.now()
@@ -202,3 +203,54 @@ def raid_stats_embed(raid: [], bungie_name: str):
     embed.set_footer(text=date)
 
     return embed
+
+
+def dungeon_stats_embed(dungeon:[], bungie_name: str):
+    name = ""
+    count = ""
+    for activity in dungeon:
+        name += '> ' + activity[0] + '\n'
+        count += str(activity[1]) + '\n'
+
+    name_, id_ = bungie_name.split('#')
+    embed = discord.Embed(
+        title="**" + bungie_name + "**",
+        description="Summary of " + name_ + "'s raid",
+        color=discord.Color.blurple()
+    )
+    embed.add_field(name="__Dungeon__", value=name)
+    embed.add_field(name="__Clears__", value=count)
+    embed.set_image(url='https://media.discordapp.net/attachments/963544576193355837/964988469296369694/unknown.png')
+
+    today = datetime.datetime.now()
+    date = today.strftime("%d/%m/%Y")
+    embed.set_footer(text=date)
+
+    return embed
+
+
+def gm_stats_embed(gm:[], bungie_name: str):
+    name = ""
+    count = ""
+    for activity in gm:
+        type_, name_ = activity[0].split(':')
+        name += '> ' + name_ + '\n'
+        count += str(activity[1]) +'\n'
+
+    name_, id = bungie_name.split('#')
+    embed = discord.Embed(
+        title="**" + bungie_name + "**",
+        descritpion="Summary of " + name_ + "'s Grandmaster Nightfalls",
+        color=discord.Color.dark_blue()
+    )
+
+    embed.add_field(name="__Grandmaster__", value=name)
+    embed.add_field(name="__Clears__", value=count)
+    embed.set_image(url="https://media.discordapp.net/attachments/963544576193355837/967190183512518666/unknown.png?width=1189&height=600")
+
+    today = datetime.datetime.now()
+    date = today.strftime("%d/%m/%Y")
+    embed.set_footer(text=date)
+
+    return embed
+

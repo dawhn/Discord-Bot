@@ -46,6 +46,20 @@ all_perks = {
     "Harmony": "<:Harmony:965357950807969876>",
     "Moving Target": "<:MovingTarget:965358334842638356>",
     "One for All": "<:OneforAll:965358962679640164>",
+    "High-Impact Reserves": "<:HighImpactReserves:967198786092941412>",
+    "Genesis": "<:Genesis:967198785996488775>",
+    "Underdog": "<:Underdog:967198786222981150>",
+    "Tap the Trigger": "<:TaptheTrigger:967198785996472340>",
+    "Dynamic Sway Reduction": "<:DynamicSwayReduction:967198786185224202>",
+    "Relentless Strikes": "<:RelentlessStrikes:967198785971302511>",
+    "Full Auto Trigger System": "<:FullAutoTriggerSystem:967198785790963794>",
+    "Fourth Time's the Charm": "<:FourthTimestheCharm:967198786092949524>",
+    "Flame Refraction": "<:FlameRefraction:967200463449632788>",
+    "Prismatic Inferno": "<:PrismaticInferno:967201329011388446>",
+    "Impulse Amplifier": "<:ImpulseAmplifier:968270202238292068>",
+    "Osmosis": "<:Osmosis:968270201932095509>",
+    "Veist Stinger": "<:VeistStinger:968270201940480030>",
+    "Steady Hands": "<:SteadyHands:968270201982443602>"
 }
 
 DestinyItemSubType = {
