@@ -1,6 +1,10 @@
 # Definitions of all class to deserialize json response
 
 class Vendors:
+    """
+    Build a class Vendor from a response to a requesy
+    """
+
     def __init__(self, response):
         self.status = response.status_code
         self.url = response.url
@@ -23,10 +27,6 @@ class Vendors:
                     print("Vendors class: 200 status and error_code 1 but there were no res['Response']")
                     print("Exception: {0}.\nType: {1}".format(ex, ex.__class__.__name__))
                     self.exception = ex.__class__.__name__
-
-                # self.vendor_hash = res['vendorHash']
-                # self.refresh_date = res['nextRefreshDate']
-                # self.enable = res['enabled']
             else:
                 print("No data returned for url: {0} with error code: {1}", self.url, self.error_code)
         else:
@@ -46,6 +46,12 @@ class Vendors:
 
 
 class Player:
+    """
+    Build a class player from a response to a request
+    """
+
+    status = 0
+
     def __init__(self, response):
         self.status = response.status_code
         self.url = response.url
@@ -94,7 +100,7 @@ class Player:
             for member in self.membership_types:
                 disp_membership_types += str(member) + " "
         disp_membership_types += "\n"
-        disp_membership_id = ".membership_id: " + str(self.membership_id) + "\n"
+        disp_membership_id = ".membership_id: " + str(self.membership_ids) + "\n"
 
         disp_url = ".url: " + str(self.url) + "\n"
         disp_msg = ".message: " + str(self.message) + "\n"

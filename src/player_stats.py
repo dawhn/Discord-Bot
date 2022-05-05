@@ -5,14 +5,18 @@ import class_json
 import requests
 
 from data import root, my_api_key
-from manifest_vendor import activity_dic
+from manifest import activity_dic
 
 access_token = 'Bearer '
 
 
-# Get Player data
-# By searching player with its bungie name
 def player(bungie_name: str) -> class_json.Player:
+    """
+    Get player data by searching the player with its bungie name
+    :param bungie_name: bungie name of the player
+    :return: an object class_json.Player
+    """
+
     me = server_application.me
     data = bungie_name.split("#")
     url = root + 'SearchDestinyPlayerByBungieName/' + 'all' + '/'
@@ -32,8 +36,13 @@ def player(bungie_name: str) -> class_json.Player:
     return p
 
 
-# Get all the deleted characters (which might hold some data about raid history)
 def get_all_deleted_char(p: class_json.Player):
+    """
+    Get all the deleted characters (which might hold some adat about the player's activity history) and add them to the
+    characters_ids attribute of the parameter p
+    :param p: the current player of class class_json.Player
+    """
+
     me = server_application.me
     header = {"X-API-Key": my_api_key,
               "Authorization": access_token + me.token['access_token']}
@@ -46,8 +55,14 @@ def get_all_deleted_char(p: class_json.Player):
             p.characters_ids.append(character['characterId'])
 
 
-# For each character (deleted or not) get its raid history and parse each raid into a list with a count
 def get_all_activity(p: class_json.Player, mode: int):
+    """
+    For each character gets id history based on which mode is passed as a parameter
+    :param p: the current player of class class_json.Player
+    :param mode: type of activity to send to the request
+    :return: a list of all activities of the current mode with the number of clear for each
+    """
+
     me = server_application.me
     header = {"X-API-Key": my_api_key,
               "Authorization": access_token + me.token['access_token']}
@@ -96,8 +111,14 @@ def get_all_activity(p: class_json.Player, mode: int):
     return list_activity
 
 
-# match each activity with its name and return the list
 def parse_activity(p: class_json.Player, mode: int):
+    """
+    Match each activity with its corresponding name
+    :param p: the current player of class class_json.Player
+    :param mode: type of activity to send to the request
+    :return: a list of all activities of the current mode with their name and the number of clear for each
+    """
+
     list_activity = get_all_activity(p=p, mode=mode)
 
     activity_dictionary = activity_dic()
@@ -141,15 +162,31 @@ def parse_activity(p: class_json.Player, mode: int):
     return res
 
 
-# return each raid with its name and clears
 def get_all_raids(p: class_json.Player):
+    """
+    Get all raids for the current player p
+    :param p: the current player of class class_json.Player
+    :return: a list of all raids with their name and the number of clear for each
+    """
+
     return parse_activity(p=p, mode=4)
 
 
-# return each dungeon with its name and clears
 def get_all_dungeons(p: class_json.Player):
+    """
+    Get all dungeons for the current player p
+    :param p: the current player of class class_json.Player
+    :return: a list of all dungeons with their name and the number of clear for each
+    """
+
     return parse_activity(p=p, mode=82)
 
 
 def get_all_gms(p: class_json.Player):
+    """
+    Get all grandmaster nightfalls for the current player p
+    :param p: the current player of class class_json.Player
+    :return: a list of all grandmaster nightfalls with their name and the number of clear for each
+    """
+
     return parse_activity(p=p, mode=46)

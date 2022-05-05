@@ -133,3 +133,5 @@ MANZIP
 data.py
 cert/*
 pickle/Manifest.content
+*.csv
+*.pickle

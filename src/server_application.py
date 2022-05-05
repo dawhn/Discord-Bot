@@ -10,6 +10,7 @@ import data
 from data import membership_types, membership_ids, characters_ids
 
 my_api_key = data.my_api_key
+app = Flask(__name__)
 
 
 # class containing every data bungie application needs to work
@@ -54,16 +55,18 @@ class Application:
 
 me = Application(39929, 'TMoN2NYNXc10FtI5OuIc0DnL6v7NewvqFHJxJ6bt21Q', '0.0.0.0', 5000, my_api_key)
 
-app = Flask(__name__)
 
-
-# Check for wether data about the access_token is stored or not
-# if yes parse it to the object me of the class Application and return True
-# if no return False
 def get_stored_informations():
+    """
+    Check for wether data about the access_token is stored locall or not
+    - Yes: Parse it to the object me of the class Application
+    - No: Do nothing
+    :return: return wether ../data.csv exists
+    """
     try:
         data_ = pd.read_csv(r'../data.csv')
     except FileNotFoundError as e:
+        print(e)
         return False
     df = pd.DataFrame(data_)
     df = df.iloc[0]
@@ -76,6 +79,11 @@ def get_stored_informations():
 
 @app.route('/')
 def authorize():
+    """
+    Get the authorization code by authorizing the application with a valid bungi.net account
+    :return: redirect the server to /redirect_url if all went wall, /end otherwise
+    """
+
     authorize_url = 'https://www.bungie.net/en/oauth/authorize?client_id=' + str(me.client_id) + '&response_type=code' \
                                                                                                  '&state=asdf '
     if me.code_found == 0:
@@ -85,19 +93,27 @@ def authorize():
         if 'code' in request.args:
             me.authorization_code = request.args['code']
         else:
-            return flask.redirect('/shutdown')
+            return flask.redirect('/end')
         return flask.redirect('/redirect_url')
 
 
-# shutdown the current server
 @app.route('/end')
 def end():
+    """
+    Simple return to avoid shutdowning the server but doesn't do anything more
+    :return:
+    """
+
     return 'OK'
 
 
-# get the redirect url from the "me" application with the authorization code got above
 @app.route('/redirect_url')
 def redirect():
+    """
+    Get the access_token, the refresh_token with their respective expiration date and store them in "me"
+    :return: redirect the server to /end
+    """
+
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -125,13 +141,18 @@ def redirect():
 
 @app.route('/refresh_url')
 def refresh():
+    """
+    Refresh the access_token, the new refresh_token with their respective expiraiton date and store them in "me"
+    :return: redirect the server to /end
+    """
+
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
     }
 
     data_ = {
         'grant_type': 'refresh_token',
-        'refresh_token': me.token['refresh'],
+        'refresh_token': me.token['refresh_token'],
         'client_id': me.client_id,
         'client_secret': me.client_secret
     }
@@ -140,9 +161,9 @@ def refresh():
     resp = r.json()
 
     me.token['access_token'] = resp['access_token']
-    me.token['access_expires'] = resp['expires_in']
+    me.token['access_expires'] = time.time() + resp['expires_in']
     me.token['refresh_token'] = resp['refresh_token']
-    me.token['refresh_expires'] = resp['refresh_expires_in']
+    me.token['refresh_expires'] = time.time() + resp['refresh_expires_in']
 
     # Replace csv file with new data
     data_ = {'access_token': [me.token['access_token']],

@@ -21,5 +21,10 @@ Every secret token or just some usefull data is in data.py (not in this reposito
 
 ### V 1.3
 - /stats: added select button to chose between Raids, Dungeons and Grandmaster Nightfalls for the requested account.
-- added refresh_url root to the local server. Which allow to retrieve the access token without requiring to get the authorization code again. It is checked automatically when calling an API endpoint.
+- Added refresh_url root to the local server. Which allow to retrieve the access token without requiring to get the authorization code again. It is checked automatically when calling an API endpoint.
 - Now only have to authorize the application once. When it is done, access_token and refresh_token with both their expiration date are stored in data.csv which can on the next launch of the bot be retrieved and keep on working without needing to authorize the application again.
+
+### V 1.4
+- Added selection of default channel for each guild (server). On launch or on server join, the bot will ask for a channel tag by a user (can be anyone for now) and save that id in a .csv to be able to retreive it later to send automatic message.
+- Send an automatic message on all servers containing Xur's information at its reset (Friday at 7PM)
+- Send an automatic message on all servers containing Banshee-44's information at its reset (Tuesday at 7PM)

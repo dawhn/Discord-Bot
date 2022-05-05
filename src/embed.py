@@ -13,8 +13,15 @@ image_destinations = [tower_jpg, edz_jpg, nessus_jpg]  # change order matching x
 name_destinations = ['The Tower, Hangar', 'EDZ, Winding Cove', 'Nessus, Watcher\'s Grave']
 
 
-# return the embed containing general information about xur
 def xur_embed(items: [()], icon_url: str, original_icon_url: str):
+    """
+    Create and return an embed about xur
+    :param items: list of weapons and armors sold by xur
+    :param icon_url: url of xur's icon
+    :param original_icon_url: url of xur's original icon
+    :return: an embed containing general information about xur
+    """
+
     embed = discord.Embed(
         title="Xûr",
         description="This week's item sold by Xûr",
@@ -51,62 +58,16 @@ def xur_embed(items: [()], icon_url: str, original_icon_url: str):
     return embed
 
 
-# return the embed containing general information about banshee's sales
-def gunsmith_embed(items: [()], icon_url: str, original_icon_url: str):
-    embed = discord.Embed(
-        title="Banshee-44",
-        description="Today's item sold by Banshee-44",
-        color=discord.Color.light_gray()
-    )
-    # banshee's picture url
-    embed.set_image(url=icon_url)
-    embed.set_thumbnail(url=original_icon_url)
-    weapons = ""
-    mods = ""
-    for item in items:
-        if item[1] == 3:
-            weapons += '> - ' + item[0] + '\n'
-        else:
-            mods += '> - ' + item[0] + '\n'
-    embed.add_field(name="<:weapon:963081886295547915> __Weapons__", value=weapons, inline=True)
-    embed.add_field(name="<:empty_socket:963080068362551306> __Mods__ ", value=mods, inline=True)
-    today = datetime.datetime.now()
-    date = today.strftime("%d/%m/%Y")
-    embed.set_footer(text=date)
+def xur_detail_embed(items: [()], index: int, items_perks: [()], stats: [()]):
+    """
+    Create and return an embed about xur's detailed sold
+    :param items: list of exotic weapons, exotic armors and legendary weapons sold by xur
+    :param index: index of the current location of xur (0 = tower, 1 = edz, 2 = nessus)
+    :param items_perks: list of perks of each weapon sold by xur
+    :param stats: list of stats of each armor sold by xur
+    :return: an embed containing detailed information about xur
+    """
 
-    return embed
-
-
-# Return the embed containing detailed information about banshee's sales
-def gunsmith_detail_embed(items: [()], original_icon_url):
-    embed = discord.Embed(
-        title="Banshee-44",
-        description="Today's items sold by Banshee-44 with perks",
-        color=discord.Color.light_gray()
-    )
-    embed.set_image(url=tower_jpg)
-    embed.set_thumbnail(url=original_icon_url)
-    weapons = ""
-    for item in items:
-        weapons += '> - ' + item[1] + '\n'
-        weapons += '> ' + str(item[3]) + ' ' + str(item[2]) + '\n'
-        weapons += '> '
-        for i in range(3, len(item)):
-            for perk_name in all_perks:
-                if perk_name == item[i]:
-                    weapons += all_perks[perk_name] + " "
-            # weapons += item[i] + " "
-        weapons += '\n\n'
-    embed.add_field(name="<:weapon:963081886295547915> __Weapons__", value=weapons, inline=True)
-    today = datetime.datetime.now()
-    date = today.strftime("%d/%m/%Y")
-    embed.set_footer(text=date)
-
-    return embed
-
-
-# Return the embed containing detailed information about xur's sales
-def xur_detail_embed(items: [()], original_icon_url: str, index: int, items_perks: [()], stats: [()]):
     embed = discord.Embed(
         title="Xûr",
         description="This week's item sold by Xûr with perks",
@@ -182,7 +143,81 @@ def xur_detail_embed(items: [()], original_icon_url: str, index: int, items_perk
     return embed
 
 
+def gunsmith_embed(items: [()], icon_url: str, original_icon_url: str):
+    """
+    Create and return an embed about banshee-44
+    :param items: list of weapons and mods sold by banshee-44
+    :param icon_url: url of banshee-44's icon
+    :param original_icon_url: url of banshee-44's original icon
+    :return: an embed containing general information about banshee-44
+    """
+
+    embed = discord.Embed(
+        title="Banshee-44",
+        description="Today's item sold by Banshee-44",
+        color=discord.Color.light_gray()
+    )
+    # banshee's picture url
+    embed.set_image(url=icon_url)
+    embed.set_thumbnail(url=original_icon_url)
+    weapons = ""
+    mods = ""
+    for item in items:
+        if item[1] == 3:
+            weapons += '> - ' + item[0] + '\n'
+        else:
+            mods += '> - ' + item[0] + '\n'
+    embed.add_field(name="<:weapon:963081886295547915> __Weapons__", value=weapons, inline=True)
+    embed.add_field(name="<:empty_socket:963080068362551306> __Mods__ ", value=mods, inline=True)
+    today = datetime.datetime.now()
+    date = today.strftime("%d/%m/%Y")
+    embed.set_footer(text=date)
+
+    return embed
+
+
+def gunsmith_detail_embed(items: [()], original_icon_url):
+    """
+    Create and return an embed about banshee-44's detailed sold
+    :param items: list of weapons alongside their perks sold by banshee-44
+    :param original_icon_url: url of banshee-44's original icon
+    :return: an embed containing detailed information about banshee-44
+    """
+
+    embed = discord.Embed(
+        title="Banshee-44",
+        description="Today's items sold by Banshee-44 with perks",
+        color=discord.Color.light_gray()
+    )
+    embed.set_image(url=tower_jpg)
+    embed.set_thumbnail(url=original_icon_url)
+    weapons = ""
+    for item in items:
+        weapons += '> - ' + item[1] + '\n'
+        weapons += '> ' + str(item[3]) + ' ' + str(item[2]) + '\n'
+        weapons += '> '
+        for i in range(3, len(item)):
+            for perk_name in all_perks:
+                if perk_name == item[i]:
+                    weapons += all_perks[perk_name] + " "
+            # weapons += item[i] + " "
+        weapons += '\n\n'
+    embed.add_field(name="<:weapon:963081886295547915> __Weapons__", value=weapons, inline=True)
+    today = datetime.datetime.now()
+    date = today.strftime("%d/%m/%Y")
+    embed.set_footer(text=date)
+
+    return embed
+
+
 def raid_stats_embed(raid: [], bungie_name: str):
+    """
+    Create and return an embed about the player's raid clears
+    :param raid: list of raids alongside their number of clear
+    :param bungie_name: the bungie name of a player
+    :return: an embed containing every raid that the player has done with its number of clear
+    """
+
     name = ""
     count = ""
     for activity in raid:
@@ -205,7 +240,14 @@ def raid_stats_embed(raid: [], bungie_name: str):
     return embed
 
 
-def dungeon_stats_embed(dungeon:[], bungie_name: str):
+def dungeon_stats_embed(dungeon: [], bungie_name: str):
+    """
+    Create and return an embed about the player's raid clears
+    :param dungeon: list of dungeons alongside their number of clear
+    :param bungie_name: the bungie name of a player
+    :return: an embed containing every dungeon that the player has done with its number of clear
+    """
+
     name = ""
     count = ""
     for activity in dungeon:
@@ -229,15 +271,22 @@ def dungeon_stats_embed(dungeon:[], bungie_name: str):
     return embed
 
 
-def gm_stats_embed(gm:[], bungie_name: str):
+def gm_stats_embed(gm: [], bungie_name: str):
+    """
+    Create and return an embed about the player's raid clears
+    :param gm: list of grandmaster nightfalls alongside their number of clear
+    :param bungie_name: the bungie name of a player
+    :return: an embed containing every grandmaster nightfall that the player has done with its number of clear
+    """
+
     name = ""
     count = ""
     for activity in gm:
         type_, name_ = activity[0].split(':')
         name += '> ' + name_ + '\n'
-        count += str(activity[1]) +'\n'
+        count += str(activity[1]) + '\n'
 
-    name_, id = bungie_name.split('#')
+    name_, _ = bungie_name.split('#')
     embed = discord.Embed(
         title="**" + bungie_name + "**",
         descritpion="Summary of " + name_ + "'s Grandmaster Nightfalls",
@@ -246,11 +295,11 @@ def gm_stats_embed(gm:[], bungie_name: str):
 
     embed.add_field(name="__Grandmaster__", value=name)
     embed.add_field(name="__Clears__", value=count)
-    embed.set_image(url="https://media.discordapp.net/attachments/963544576193355837/967190183512518666/unknown.png?width=1189&height=600")
+    embed.set_image(url="https://media.discordapp.net/attachments/963544576193355837/967190183512518666/unknown.png"
+                        "?width=1189&height=600")
 
     today = datetime.datetime.now()
     date = today.strftime("%d/%m/%Y")
     embed.set_footer(text=date)
 
     return embed
-
