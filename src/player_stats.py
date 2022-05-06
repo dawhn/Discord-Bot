@@ -1,9 +1,13 @@
 # File containing every functions that are necessary to retrieve data about a player
 
-import server_application
-import class_json
+# imports
 import requests
 
+# file imports
+import server_application
+
+# from file imports
+from classes import class_json
 from data import root, my_api_key
 from manifest import activity_dic
 
@@ -40,7 +44,7 @@ def get_all_deleted_char(p: class_json.Player):
     """
     Get all the deleted characters (which might hold some adat about the player's activity history) and add them to the
     characters_ids attribute of the parameter p
-    :param p: the current player of class class_json.Player
+    :param p: the current player of classes class_json.Player
     """
 
     me = server_application.me
@@ -58,7 +62,7 @@ def get_all_deleted_char(p: class_json.Player):
 def get_all_activity(p: class_json.Player, mode: int):
     """
     For each character gets id history based on which mode is passed as a parameter
-    :param p: the current player of class class_json.Player
+    :param p: the current player of classes class_json.Player
     :param mode: type of activity to send to the request
     :return: a list of all activities of the current mode with the number of clear for each
     """
@@ -114,7 +118,7 @@ def get_all_activity(p: class_json.Player, mode: int):
 def parse_activity(p: class_json.Player, mode: int):
     """
     Match each activity with its corresponding name
-    :param p: the current player of class class_json.Player
+    :param p: the current player of classes class_json.Player
     :param mode: type of activity to send to the request
     :return: a list of all activities of the current mode with their name and the number of clear for each
     """
@@ -165,7 +169,7 @@ def parse_activity(p: class_json.Player, mode: int):
 def get_all_raids(p: class_json.Player):
     """
     Get all raids for the current player p
-    :param p: the current player of class class_json.Player
+    :param p: the current player of classes class_json.Player
     :return: a list of all raids with their name and the number of clear for each
     """
 
@@ -175,7 +179,7 @@ def get_all_raids(p: class_json.Player):
 def get_all_dungeons(p: class_json.Player):
     """
     Get all dungeons for the current player p
-    :param p: the current player of class class_json.Player
+    :param p: the current player of classes class_json.Player
     :return: a list of all dungeons with their name and the number of clear for each
     """
 
@@ -185,7 +189,7 @@ def get_all_dungeons(p: class_json.Player):
 def get_all_gms(p: class_json.Player):
     """
     Get all grandmaster nightfalls for the current player p
-    :param p: the current player of class class_json.Player
+    :param p: the current player of classes class_json.Player
     :return: a list of all grandmaster nightfalls with their name and the number of clear for each
     """
 

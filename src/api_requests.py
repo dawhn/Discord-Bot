@@ -5,14 +5,14 @@ import time
 import requests
 
 # file imports
-import server_application
 import embed
+import server_application
 
 # from file imports
 from data import my_api_key, root, icon_root
 from discord_features import check_xur
 from manifest import vendor_dic, item_dic, location_dic, perk_dic
-from perks_data import DestinyItemSubType
+from api.perks_data import DestinyItemSubType
 
 access_token = 'Bearer '
 

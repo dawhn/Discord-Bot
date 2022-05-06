@@ -1,8 +1,8 @@
-# Definitions of all class to deserialize json response
+# Definitions of all classes to deserialize json response
 
 class Vendors:
     """
-    Build a class Vendor from a response to a requesy
+    Build a classes Vendor from a response to a requesy
     """
 
     def __init__(self, response):
@@ -24,7 +24,7 @@ class Vendors:
                     self.data = res['Response']
                     self.vendor_hash = res['Response']['vendors']['data']
                 except Exception as ex:
-                    print("Vendors class: 200 status and error_code 1 but there were no res['Response']")
+                    print("Vendors classes: 200 status and error_code 1 but there were no res['Response']")
                     print("Exception: {0}.\nType: {1}".format(ex, ex.__class__.__name__))
                     self.exception = ex.__class__.__name__
             else:
@@ -47,7 +47,7 @@ class Vendors:
 
 class Player:
     """
-    Build a class player from a response to a request
+    Build a classes player from a response to a request
     """
 
     status = 0

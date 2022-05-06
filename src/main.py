@@ -3,9 +3,9 @@
 # imports
 import threading
 import time
-import discord
 import pandas as pd
 import requests
+import discord
 
 # from imports
 from discord.ext import commands
@@ -17,16 +17,16 @@ from discord_slash.utils.manage_commands import create_option
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 # file imports
-import embed
-import player_stats
-import server_application
 import api_requests
+import player_stats
+import automatic_commands
+import embed
+import server_application
 
 # from file imports
 from data import token, myBot
 from manifest import vendor_dic, item_dic, location_dic
 from discord_features import check_default_channels, check_xur
-import automatic_commands
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -191,5 +191,5 @@ async def stats(msg: SlashContext, bungie_name: str):
         await inter.edit_origin(embed=data_embed[pos], components=[action_row])
 
 
-# Run the discord bot
+# Run the disc bot
 myBot.run(token)

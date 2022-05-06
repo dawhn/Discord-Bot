@@ -1,10 +1,12 @@
 # File containing every functions that are necessary to create every needed embed for the bot
 
+# imports
 import datetime
 import discord
-import perks_data
 
-from perks_data import all_perks
+# from file imports
+from api import perks_data
+from api.perks_data import all_perks
 
 tower_jpg = 'https://cdn.discordapp.com/attachments/963544576193355837/963546618475479060/tower.jpg'
 nessus_jpg = 'https://cdn.discordapp.com/attachments/963544576193355837/963546607725461534/nessus.jpg'

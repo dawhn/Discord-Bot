@@ -1,4 +1,4 @@
-# File containing every function that are necessary to make automatic features on discord servers
+# File containing every function that are necessary to make automatic features on disc servers
 
 # imports
 import datetime

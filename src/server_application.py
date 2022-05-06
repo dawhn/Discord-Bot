@@ -1,19 +1,25 @@
 # File containing every functions that are necessary to get the access token
 
-from flask import Flask, request
+# imports
 import flask
 import time
 import requests
 import pandas as pd
 
+# from imports
+from flask import Flask, request
+
+# file imports
 import data
+
+# from file imports
 from data import membership_types, membership_ids, characters_ids
 
 my_api_key = data.my_api_key
 app = Flask(__name__)
 
 
-# class containing every data bungie application needs to work
+# classes containing every data bungie application needs to work
 class Application:
     """
     Attributes:
@@ -59,7 +65,7 @@ me = Application(39929, 'TMoN2NYNXc10FtI5OuIc0DnL6v7NewvqFHJxJ6bt21Q', '0.0.0.0'
 def get_stored_informations():
     """
     Check for wether data about the access_token is stored locall or not
-    - Yes: Parse it to the object me of the class Application
+    - Yes: Parse it to the object me of the classes Application
     - No: Do nothing
     :return: return wether ../data.csv exists
     """
