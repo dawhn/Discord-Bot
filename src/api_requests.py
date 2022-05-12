@@ -11,8 +11,8 @@ import server_application
 # from file imports
 from data import my_api_key, root, icon_root
 from discord_features import check_xur
-from manifest import vendor_dic, item_dic, location_dic, perk_dic
-from api.perks_data import DestinyItemSubType
+from manifest import vendor_dic, item_dic, location_dic, perk_dic, activity_dic, activity_modifier_dic
+from api.perks_data import DestinyItemSubType, DestinyChallenges
 
 access_token = 'Bearer '
 
@@ -263,3 +263,169 @@ def get_vendor(name: str):
             if name == 'Xûr':
                 break
     return vendor_hash, large_icon_url, original_icon_url, destinations
+
+
+def get_weekly_activities(headers: dict):
+    me = server_application.me
+    path = root + str(me.membership_types[0]) + '/Profile/' + str(me.membership_ids[0]) + '/Character/' + str(
+        me.character_ids[2]) + '/?components=204'
+    r = requests.get(path, headers=headers)
+    resp = r.json()
+    if resp['ErrorCode'] != 1 or resp['ErrorStatus'] != 'Success':
+        return None
+
+    if 'activities' not in resp['Response']:
+        return None
+    return resp
+
+
+def get_weekly_nf(activities: dict):
+    activity_dictionary = activity_dic()
+    act = None
+    found = False
+    for activity in activities['Response']['activities']['data']['availableActivities']:
+        if 'recommendedLight' in activity:
+            if activity['recommendedLight'] == 1580:
+                for activity_hash, activity_def in activity_dictionary['DestinyActivityDefinition'].items():
+                    if found:
+                        break
+                    if activity_hash == activity['activityHash'] and 'Nightfall' in activity_def['displayProperties']['name']:
+                        act = activity_def
+                        found = True
+        if found:
+            break
+    return act['displayProperties']['description']
+
+
+def get_weekly_challenges(activities: dict):
+    vow_hash = 4217492330
+    vog_hash = 1681562271
+    gos_hash = 2497200493
+    dsc_hash = 910380154
+
+    modifiers_vow = []
+    modifiers_vog = []
+    modifiers_gos = []
+    modifiers_dsc = []
+    activity_mod_dic = activity_modifier_dic()
+
+    for activity in activities['Response']['activities']['data']['availableActivities']:
+        if activity['activityHash'] == vow_hash:
+            modifiers_vow = activity['modifierHashes']
+        if activity['activityHash'] == vog_hash:
+            modifiers_vog = activity['modifierHashes']
+        if activity['activityHash'] == gos_hash:
+            modifiers_gos = activity['modifierHashes']
+        if activity['activityHash'] == dsc_hash:
+            modifiers_dsc = activity['modifierHashes']
+
+    modifiers = [modifiers_vow, modifiers_vog, modifiers_gos, modifiers_dsc]
+    challenges = []
+
+    for modifier_r in modifiers:
+        for modifier in modifier_r:
+            for mod_hash, mod in activity_mod_dic['DestinyActivityModifierDefinition'].items():
+                if modifier == mod_hash and mod['displayProperties']['name'] in DestinyChallenges:
+                    challenges.append(mod['displayProperties']['name'])
+
+    res = []
+    for i in range(len(challenges)):
+        res.append([challenges[i]])
+        res[i].extend(DestinyChallenges[challenges[i]])
+
+    return res
+
+
+def get_weekly_hunts(activities: dict):
+    activity_dictionary = activity_dic()
+    rotate = []
+    for activity in activities['Response']['activities']['data']['availableActivities']:
+        if 'recommendedLight' in activity:
+            if activity['recommendedLight'] == 1580:
+                for activity_hash, activity_def in activity_dictionary['DestinyActivityDefinition'].items():
+                    if activity['activityHash'] == activity_hash:
+                        name = activity_def['displayProperties']['name']
+                        if 'Vow' not in name and 'Vault' not in name and 'Vox' not in name and 'Wellspring' not in name\
+                                and 'Nightfall' not in name:
+                            name = activity_def['displayProperties']['name']
+                            if 'Master' in name:
+                                test = name.split(':')
+                                name = ':'.join(test[0:len(test) - 1])
+                            rotate.append(name)
+    return rotate
+
+
+def get_weekly_test(headers: dict):
+    me = server_application.me
+    path = root + str(me.membership_types[0]) + '/Profile/' + str(me.membership_ids[0]) + '/Character/' + str(
+        me.character_ids[2]) + '/?components=202'
+    r = requests.get(path, headers=headers)
+    resp = r.json()
+    if resp['ErrorCode'] != 1 or resp['ErrorStatus'] != 'Success':
+        return None
+
+    return resp
+
+
+def get_rank_boost(activities: dict):
+    boost = ""
+    double_rewards = ""
+    for activity in activities['Response']['activities']['data']['availableActivities']:
+        if 'modifierHashes' in activity:
+            for modifier in activity['modifierHashes']:
+                if modifier == 3874605433:
+                    boost = "Double Crucible Rank"
+                if modifier == 745014575:
+                    boost = "Double Vanguard Rank"
+                if modifier == 3228023383:
+                    modifier = "Double Gambit Rank"
+                if modifier == 1171597537:
+                    double_rewards = "Double Nightfall Drops"
+    return boost, double_rewards
+
+
+def check_pvp_mode(hash_: str):
+    if hash_ == 1717505396 or hash_ == 1957660400 or hash_ == 1957660400 or hash_ == 1683791010 or hash_ == 3283279668 or hash_ == 2259621230:
+        return False
+    return True
+
+
+def check_banner(hash_: str):
+    if hash_ == 1683791010:
+        return True
+    return False
+
+
+def get_weekly_pvp_mode(activities: dict):
+    activity_dictionary = activity_dic()
+    res = []
+    for activity in activities['Response']['progressions']['data']['milestones']['3312774044']['activities']:
+        if check_banner(activity['activityHash']):
+            res.append("Iron Banner")
+            continue
+        if check_pvp_mode(activity['activityHash']):
+            for activity_hash, activity_def in activity_dictionary['DestinyActivityDefinition'].items():
+                if activity_hash == activity['activityHash']:
+                    res.append(activity_def['displayProperties']['name'])
+    return res
+
+
+def get_weekly():
+    me = server_application.me
+    headers = {"X-API-Key": my_api_key,
+               "Authorization": access_token + me.token['access_token']}
+
+    activities = get_weekly_activities(headers)
+
+    nf = get_weekly_nf(activities)
+    challenges = get_weekly_challenges(activities)
+    hunts = get_weekly_hunts(activities)
+    boost, double_rewards = get_rank_boost(activities)
+
+    activities = get_weekly_test(headers)
+
+    pvp_mode = get_weekly_pvp_mode(activities)
+
+    res = [nf, challenges, hunts, pvp_mode, boost, double_rewards]
+    print(res)
+    return embed.weekly_embed(res)

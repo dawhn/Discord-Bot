@@ -130,7 +130,6 @@ dmypy.json
 
 # Others
 MANZIP
-data.py
 cert/*
 pickle/Manifest.content
 *.csv

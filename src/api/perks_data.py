@@ -91,3 +91,78 @@ DestinyItemSubType = {
     "DummyRepeatableBounty": 32,
     "Glaive": 33
 }
+
+DestinyChallenges = {
+    # VOW challenges
+    "Swift Destruction":
+        [
+            "Vow of the Disciple", "Acquisition encounter", "All three Unstoppable Abominations must be killed within 5 seconds."
+        ],
+    "Base Information":
+        [
+            "Vow of the Disciple", "Caretaker encounter", "You may only grab one symbol at a time."
+        ],
+    "Defenses Down":
+        [
+            "Vow of the Disciple", "Exhibition encounter", "Each player may only kill one Taken knight."
+        ],
+    "Looping Catalyst":
+        [
+            "Vow of the Disciple", "Rhulk encounter", "Your fireteam cannot lose the Leeching Essence buff."
+        ],
+    # VOG Challenges
+    "Wait for It...":
+        [
+            "Vault of Glass", "Confluxes encounter", "Only defeat Wyverns while they're sacrificing.", "Vision of Confluence"
+        ],
+    "The Only Oracle For You":
+        [
+            "Vault of Glass", "Oracle encounter", "Each player may not destroy the same oracle twice.", "Praedyth's Revenge"
+        ],
+    "Out of Its Way":
+        [
+            "Vault of Glass", "Templar encounter", "Defeat the Templar without allowing it to teleport.", "Fatebringer"
+        ],
+    "Strangers in Time":
+        [
+            "Vault of Glass", "Gatekeepers encounter", "Defeat the Wyvern and Praetorian Minotaur enemies within 3 seconds of each other.", "Hezen Vengeance"
+        ],
+    "Ensemble's Refrain":
+        [
+            "Vault of Glass", "Atheon encounter", "Each player may not destroy more than one oracle per oracle wave.", "Corrective Measure"
+        ],
+    # GOS Challenges
+    "A Link to the Chain":
+        [
+            "Garden of Salvation", "First encounter", "All six fireteam members must replenish enlightment at the same time."
+        ],
+    "To the Top":
+        [
+            "Garden of Salvation","Third encounter", "10 motes must be deposited at a time."
+        ],
+    "Zero to One Hundred":
+        [
+            "Garden of Salvation","Fourth encounter", "Once you deposite motes, you have 10 seconds to fully fill the bank."
+        ],
+    "Leftovers":
+        [
+            "Garden of Salvation","First encounter", "Do not kill any of the Cyclops in the room where the Consecrated Mind is depositing Voltaic Overflow charges."
+        ],
+    # DSC Challenges
+    "Red Rover":
+        [
+            "Deep Stone Crypt", "First encounter", "All players have to be operator and shoot two pannels on lowe level (requires 3 phases)."
+        ],
+    "Copies of Copies":
+        [
+            "Deep Stone Crypt", "Second encounter", "Do not send any Replication debuff out of an airlock."
+        ],
+    "Of All Trades":
+        [
+            "Deep Stone Crypt", "Thir encounter", "All players on the fireteam must do each role (operator, scanner, suppressor) once."
+        ],
+    "The Core Four":
+        [
+            "Deep Stone Crypt", "Fourth encounter", "Players must dunk all four cores each time you can destroy Taniks' orange generator."
+        ]
+}

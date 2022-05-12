@@ -2,6 +2,8 @@
 
 # imports
 import datetime
+import logging
+
 import pandas as pd
 
 # from imports
@@ -111,7 +113,7 @@ async def check_default_channels():
         register_guilds()
     data = pd.read_csv('../guilds.csv')
     data = data.iloc[:, 1:]
-    print(data)
+    logging.info('Server list:\n\t' + data.to_string().replace('\n', '\n\t'))
 
     for guild in myBot.guilds:
         found = False
@@ -140,7 +142,7 @@ async def check_default_channels():
                                                   "'#general'")
                 channel = await myBot.wait_for('message', check=check_author)
             channel = int(channel.content[2:-1])
-            new_row = pd.DataFrame([guild.name, str(channel)], columns=list('namechannel'))
-            data.append(new_row)
+            new_row = pd.DataFrame([[guild.name, str(channel)]], columns=['name', 'channel'])
+            data = data.append(new_row)
             print(data)
     data.to_csv('../guilds.csv')

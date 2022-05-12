@@ -1,11 +1,13 @@
 # Discord Bot main file
 
 # imports
+import sys
 import threading
 import time
 import pandas as pd
 import requests
 import discord
+import logging
 
 # from imports
 from discord.ext import commands
@@ -35,12 +37,19 @@ slash = SlashCommand(myBot, sync_commands=True)
 access_token = 'Bearer '
 app = server_application.app
 
+# Logger setup
+logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.INFO)
+logging.getLogger('discord').setLevel(logging.ERROR)
+logging.getLogger('requests').setLevel(logging.ERROR)
+logging.getLogger('flask').setLevel(logging.ERROR)
+
 
 def run_flask():
     """
     # run the app (the server) which is in server_application.py
     """
-
+    cli = sys.modules['flask.cli']
+    cli.show_server_banner = lambda *x: None
     app.run(port=8000, ssl_context=('../cert/cert.pem', '../cert/priv_key.pem'))
 
 
@@ -84,8 +93,7 @@ async def on_ready():
     automatic_commands.vendor_embeds.append(api_requests.sales_vendor('Banshee-44'))
     await check_default_channels()
     automatic_commands.resets.start()
-    print('Logged in as')
-    print(myBot.user.name + '\n')
+    logging.info('Logged in as %s\n', myBot.user.name)
 
 
 @slash.slash(name="Banshee",
@@ -105,6 +113,7 @@ async def banshee(msg):
     button_general = [create_button(style=ButtonStyle.red, label="Come back to general view")]
     action_row = [create_actionrow(*button_details), create_actionrow(*button_general)]
     await msg.send(embed=automatic_commands.vendor_embeds[0][pos], components=[action_row[pos]])
+    logging.info("/banshee command send")
     while 1:
         inter = await wait_for_component(myBot, components=[action_row[pos]])
         pos = (pos + 1) % 2
@@ -132,6 +141,7 @@ async def xur(msg: SlashContext):
     button_details = [create_button(style=ButtonStyle.green, label="Click for details")]
     button_general = [create_button(style=ButtonStyle.red, label="Come back to general view")]
     action_row = [create_actionrow(*button_details), create_actionrow(*button_general)]
+    logging.info("/xur command send")
     await msg.send(embed=automatic_commands.vendor_embeds[1][pos], components=[action_row[pos]])
     while 1:
         inter = await wait_for_component(myBot, components=[action_row[pos]])
@@ -185,10 +195,36 @@ async def stats(msg: SlashContext, bungie_name: str):
     )
     action_row = create_actionrow(select)
     await msg.send(embed=data_embed[0], components=[action_row])
+    logging.info("/stats command send")
     while 1:
         inter = await wait_for_component(myBot, components=[action_row])
         pos = int(inter.values[0])
         await inter.edit_origin(embed=data_embed[pos], components=[action_row])
+
+
+@slash.slash(name="Weekly",
+             description="Information about this week")
+async def weekly(msg: SlashContext):
+    await msg.defer()
+    me = server_application.me
+    if time.time() > me.token['access_expires']:
+        api_requests.refresh_token()
+    embeds = api_requests.get_weekly()
+    button_nf = [create_button(style=ButtonStyle.blue, label="Nightfalls")]
+    button_raid = [create_button(style=ButtonStyle.gray, label="Raids")]
+    button_hunt = [create_button(style=ButtonStyle.blue, label="Hunts")]
+    button_wq = [create_button(style=ButtonStyle.green, label="Witch Queen")]
+    button_pvp = [create_button(style=ButtonStyle.red, label="PVP")]
+
+    action_row = [create_actionrow(*button_nf), create_actionrow(*button_raid), create_actionrow(*button_hunt),
+                  create_actionrow(*button_wq), create_actionrow(*button_pvp)]
+
+    pos = 0
+    await msg.send(embed=embeds[pos], components=[action_row[pos]])
+    while 1:
+        inter = await wait_for_component(myBot, components=[action_row[pos]])
+        pos = (pos + 1) % 4
+        await inter.edit_origin(embed=embeds[pos], components=[action_row[pos]])
 
 
 # Run the disc bot

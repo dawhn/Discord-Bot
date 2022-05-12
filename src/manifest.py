@@ -2,6 +2,7 @@
 
 # imports
 import json
+import logging
 import os
 import pickle
 import sqlite3
@@ -37,6 +38,10 @@ hash_perk = {
 
 hash_activity = {
     'DestinyActivityDefinition': 'hash'
+}
+
+hash_activity_modifier = {
+    'DestinyActivityModifierDefinition': 'hash'
 }
 
 
@@ -83,7 +88,7 @@ def build_dict(hash_dict):
     for table_name in hash_dict.keys():
         # get a list of all the jsons from the table
         cur.execute('SELECT json from ' + table_name)
-        print('Generating ' + table_name + ' dictionary....')
+        logging.info('Generating %s dictionary...', table_name)
 
         # this returns a list of tuples: the first item in each tuple is our json
         vendors = cur.fetchall()
@@ -104,7 +109,7 @@ def build_dict(hash_dict):
         # as a key.
         all_data[table_name] = vendor_dict
 
-    print('Dictionary Generated!')
+    logging.info('Dictionary Generated!')
     return all_data
 
 
@@ -120,9 +125,9 @@ def dic(path: str, hash_: dict):
         all_data = build_dict(hash_)
         with open(path, 'wb') as data:
             pickle.dump(all_data, data)
-            print(path, " Created")
+            logging.info('%s Created', path)
     else:
-        print(path, " Exists")
+        logging.info('%s Exists', path)
     with open(path, 'rb') as data:
         all_data = pickle.load(data)
     return all_data
@@ -182,3 +187,7 @@ def activity_dic():
     """
 
     return dic(r'../pickle/manifest_activity.pickle', hash_activity)
+
+
+def activity_modifier_dic():
+    return dic(r'../pickle/manifest_activity_modifier.pickle', hash_activity_modifier)

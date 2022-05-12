@@ -5,7 +5,7 @@ import datetime
 import discord
 
 # from file imports
-from api import perks_data
+from api import perks_data, images
 from api.perks_data import all_perks
 
 tower_jpg = 'https://cdn.discordapp.com/attachments/963544576193355837/963546618475479060/tower.jpg'
@@ -305,3 +305,50 @@ def gm_stats_embed(gm: [], bungie_name: str):
     embed.set_footer(text=date)
 
     return embed
+
+
+def weekly_embed(stats):
+    nf_embed = discord.Embed(
+        title="Weekly rotating Nightfall:\n**" + stats[0] + "**",
+        color=discord.Color.dark_blue()
+    )
+    if stats[5] != '':
+        nf_embed.add_field(name="Double Nightfall rewards", value="All Nightfall loot drops are doubled.")
+    nf_embed.set_image(url=images.strikes[stats[0]])
+
+    raid_embed = discord.Embed(
+        title="**Weekly raid challenges**",
+        color=discord.Color.light_grey()
+    )
+    raid_embed.set_image(url="https://media.discordapp.net/attachments/963544576193355837/964988469296369694/unknown.png?width=1117&height=571")
+    for raid in stats[1]:
+        val = ""
+        val += raid[0] + "\n"
+        val += raid[2] + ": " + raid[3]
+        print(val)
+        raid_embed.add_field(name=raid[1], value=val)
+
+    hunt_embed = discord.Embed(
+        title="Weekly rotating empire hunt:\n**" + stats[2][0] + "**",
+        color=discord.Color.dark_blue()
+    )
+    val = ""
+    for i in range(1, 3):
+        val += stats[2][i] + "\n"
+    hunt_embed.add_field(name="Weekly rotating nightmare hunts", value=val)
+    hunt_embed.set_image(url=images.empire_hunt[stats[2][0]])
+
+    wq_embed = discord.Embed(
+        title="Weekly rotating Witch queen campaign mission:\n**" + stats[2][4] + "**",
+        color=discord.Color.green()
+    )
+    wq_embed.set_image(url=images.wq_campaign[stats[2][4]])
+
+    pvp_embed = discord.Embed(
+        title="Weekly rotating pvp mode:\n**" + stats[3][0],
+        color=discord.Color.red()
+    )
+    if len(stats[3]) > 1:
+        pvp_embed.add_field(name="Iron Banner", value="This week is Iron Banner, no Trials of Osiris this weekend !")
+
+    return nf_embed, raid_embed, hunt_embed, wq_embed, pvp_embed

@@ -37,8 +37,8 @@ async def before_reset():
     Allow to start the bot whenever we want and still have the call to resets() to be at 7PM
     """
 
-    hour = 19
-    minute = 0
+    hour = 20
+    minute = 1
     await myBot.wait_until_ready()
     now = datetime.datetime.now()
     future = datetime.datetime(now.year, now.month, now.day, hour, minute)
