@@ -41,10 +41,10 @@ async def before_reset():
     Allow to start the bot whenever we want and still have the call to resets() to be at 7PM
     """
 
-    hour = 19
+    hour = 17
     minute = 2
     await myBot.wait_until_ready()
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(datetime.timezone.utc)
     future = datetime.datetime(now.year, now.month, now.day, hour, minute)
     if now.hour >= hour and now.minute >= minute:
         future += datetime.timedelta(days=1)
@@ -65,15 +65,15 @@ async def auto():
         chans.append(new_chan)
     if check_xur():
         xur_load(False)
-    if datetime.datetime.now().weekday() == 1:
+    if datetime.datetime.now(datetime.timezone.utc).weekday() == 1:
         banshee_load()
         weekly_load()
 
     async def auto_(channel):
         tasks_ = []
-        if check_xur() and datetime.datetime.now().weekday() == 4:
+        if check_xur() and datetime.datetime.now(datetime.timezone.utc).weekday() == 4:
             tasks_.append(xur_auto(channel))
-        if datetime.datetime.now().weekday() == 1:
+        if datetime.datetime.now(datetime.timezone.utc).weekday() == 1:
             tasks_.append(weekly_auto(channel))
         await Promise.all(tasks_)
 
@@ -87,7 +87,7 @@ def xur_load(overload: bool):
     @param overload: when True, allow to always append xur's data to vendor_embeds
     """
 
-    if overload or len(vendor_embeds) == 1 or datetime.datetime.now().weekday() == 4:
+    if overload or len(vendor_embeds) == 1 or datetime.datetime.now(datetime.timezone.utc).weekday() == 4:
         print('xur loaded')
         vendor_embeds.append(api_requests.sales_vendor('Xûr'))
 
@@ -97,7 +97,7 @@ def banshee_load():
     Load Banshee-44's data and update it in vendor_embeds
     """
 
-    if datetime.datetime.now().weekday() == 1:
+    if datetime.datetime.now(datetime.timezone.utc).weekday() == 1:
         vendor_embeds.pop()
         vendor_embeds[0] = api_requests.sales_vendor('Banshee-44')
 
@@ -106,7 +106,7 @@ def weekly_load():
     """
     Load weekly data and update weekly_embeds
     """
-    if datetime.datetime.now().weekday() == 1:
+    if datetime.datetime.now(datetime.timezone.utc).weekday() == 1:
         global weekly_embeds
         weekly_embeds = api_requests.get_weekly()
 

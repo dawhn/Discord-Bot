@@ -17,9 +17,9 @@ def check_xur():
     :return: True if xur is present, False otherwise
     """
 
-    if (datetime.datetime.now().weekday() < 1 or datetime.datetime.now().weekday() > 4 or
-            (datetime.datetime.now().weekday() == 1 and datetime.datetime.now().hour < 19) or
-            (datetime.datetime.now().weekday() == 4 and datetime.datetime.now().hour >= 19)):
+    if (datetime.datetime.now(datetime.timezone.utc).weekday() < 1 or datetime.datetime.now(datetime.timezone.utc).weekday() > 4 or
+            (datetime.datetime.now(datetime.timezone.utc).weekday() == 1 and datetime.datetime.now(datetime.timezone.utc).hour < 17) or
+            (datetime.datetime.now(datetime.timezone.utc).weekday() == 4 and datetime.datetime.now(datetime.timezone.utc).hour >= 17)):
         return True
     return False
 

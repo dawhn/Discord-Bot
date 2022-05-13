@@ -35,3 +35,4 @@ Every secret token or just some usefull data is in data.py (not in this reposito
 - This command returns an embed that has many buttons to switch view between all possible information and when on the raid view has a select menu to chose details about a specific raid.
 - Removed /banshee information on weekly reset on Tuesday and added /weekly information instead.
 - Delayed automatic information on Tuesday / Friday reset from 19:00 to 19:02 CEST in order to make sure the update on the API has been concluded
+- Changed from 19:02 CEST to 17:02 UTC to make it easier for different timezone

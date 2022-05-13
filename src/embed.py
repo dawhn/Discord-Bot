@@ -53,7 +53,7 @@ def xur_embed(items: [()], icon_url: str, original_icon_url: str):
                     inline=True)
     embed.add_field(name="<:legendary_armor:963113337384738826> __Legendary Armors__", value=legendary_armor,
                     inline=True)
-    today = datetime.datetime.now()
+    today = datetime.datetime.now(datetime.timezone.utc)
     date = today.strftime("%d/%m/%Y")
     embed.set_footer(text=date)
 
@@ -171,7 +171,7 @@ def gunsmith_embed(items: [()], icon_url: str, original_icon_url: str):
             mods += '> - ' + item[0] + '\n'
     embed.add_field(name="<:weapon:963081886295547915> __Weapons__", value=weapons, inline=True)
     embed.add_field(name="<:empty_socket:963080068362551306> __Mods__ ", value=mods, inline=True)
-    today = datetime.datetime.now()
+    today = datetime.datetime.now(datetime.timezone.utc)
     date = today.strftime("%d/%m/%Y")
     embed.set_footer(text=date)
 
@@ -205,7 +205,7 @@ def gunsmith_detail_embed(items: [()], original_icon_url):
             # weapons += item[i] + " "
         weapons += '\n\n'
     embed.add_field(name="<:weapon:963081886295547915> __Weapons__", value=weapons, inline=True)
-    today = datetime.datetime.now()
+    today = datetime.datetime.now(datetime.timezone.utc)
     date = today.strftime("%d/%m/%Y")
     embed.set_footer(text=date)
 
@@ -235,7 +235,7 @@ def raid_stats_embed(raid: [], bungie_name: str):
     embed.add_field(name="__Clears__", value=count)
     embed.set_image(url='https://media.discordapp.net/attachments/963544576193355837/964988469296369694/unknown.png')
 
-    today = datetime.datetime.now()
+    today = datetime.datetime.now(datetime.timezone.utc)
     date = today.strftime("%d/%m/%Y")
     embed.set_footer(text=date)
 
@@ -266,7 +266,7 @@ def dungeon_stats_embed(dungeon: [], bungie_name: str):
     embed.add_field(name="__Clears__", value=count)
     embed.set_image(url='https://media.discordapp.net/attachments/963544576193355837/964988469296369694/unknown.png')
 
-    today = datetime.datetime.now()
+    today = datetime.datetime.now(datetime.timezone.utc)
     date = today.strftime("%d/%m/%Y")
     embed.set_footer(text=date)
 
@@ -300,7 +300,7 @@ def gm_stats_embed(gm: [], bungie_name: str):
     embed.set_image(url="https://media.discordapp.net/attachments/963544576193355837/967190183512518666/unknown.png"
                         "?width=1189&height=600")
 
-    today = datetime.datetime.now()
+    today = datetime.datetime.now(datetime.timezone.utc)
     date = today.strftime("%d/%m/%Y")
     embed.set_footer(text=date)
 

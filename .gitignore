@@ -136,3 +136,4 @@ pickle/Manifest.content
 *.pickle
 .idea/
 Procfile
+src/data.py
