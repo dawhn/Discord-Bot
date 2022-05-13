@@ -30,8 +30,8 @@ def sales_vendor(name: str):
     Build 2 embed about the vendor, one containing general information, the other containing detailed informatio
     - First one is general with overall information about the vendor sales
     - Second is more specific and detailed with item perks, item stats and location
-    :param name: name of the vendor
-    :return: 2 embed one general, the other detailed
+    @param name: name of the vendor
+    @return: 2 embed one general, the other detailed
     """
 
     if name == 'Xûr':
@@ -90,13 +90,13 @@ def sales_vendor(name: str):
 def get_details(vendor_hash, original_icon: str, destinations: [], name: str, items: [], items_number: [()]):
     """
     Get detailed information about a vendor
-    :param vendor_hash: hash of the vendor
-    :param original_icon: the original icon of the vendor
-    :param destinations: all the possible destination of the vendor
-    :param name: the name of the vendor
-    :param items: list of items sold by the vendor (weapons, armors or mods with their item type)
-    :param items_number: list of items sold by the vendor (only weapons and armors and contains the item archetype)
-    :return: an embed message containing detailed information about the vendor
+    @param vendor_hash: hash of the vendor
+    @param original_icon: the original icon of the vendor
+    @param destinations: all the possible destination of the vendor
+    @param name: the name of the vendor
+    @param items: list of items sold by the vendor (weapons, armors or mods with their item type)
+    @param items_number: list of items sold by the vendor (only weapons and armors and contains the item archetype)
+    @return: an embed message containing detailed information about the vendor
     """
 
     items_perks = get_items_perks(vendor_hash, items_number)
@@ -111,9 +111,9 @@ def get_details(vendor_hash, original_icon: str, destinations: [], name: str, it
 def get_items_perks(vendor_hash: str, items: [()]):
     """
     Get all perks for each item sold by the vendor
-    :param vendor_hash: hash of the vendor
-    :param items: list of all items sold by the vendor
-    :return: a list containing all items with their respective perks sold by the vendor
+    @param vendor_hash: hash of the vendor
+    @param items: list of all items sold by the vendor
+    @return: a list containing all items with their respective perks sold by the vendor
     """
 
     me = server_application.me
@@ -155,9 +155,9 @@ def get_items_perks(vendor_hash: str, items: [()]):
 def get_all_stats(vendor_hash: str, items: []):
     """
     Get all stats for each armor sold by the vendor
-    :param vendor_hash: hash of the vendor
-    :param items: list of all items sold by the vendor
-    :return: a list of all items sold with their respective stats sold by the vendor
+    @param vendor_hash: hash of the vendor
+    @param items: list of all items sold by the vendor
+    @return: a list of all items sold with their respective stats sold by the vendor
     """
 
     me = server_application.me
@@ -210,9 +210,9 @@ def get_all_stats(vendor_hash: str, items: []):
 def get_destination(vendor_hash: str, destinations: []):
     """
     Get the current location of the vendor
-    :param vendor_hash: hash of the vendor to look for
-    :param destinations: all the possible destinations of the vendor
-    :return: the destination and the index of the destination in the list of all possible destinations
+    @param vendor_hash: hash of the vendor to look for
+    @param destinations: all the possible destinations of the vendor
+    @return: the destination and the index of the destination in the list of all possible destinations
     """
 
     me = server_application.me
@@ -241,8 +241,8 @@ def get_destination(vendor_hash: str, destinations: []):
 def get_vendor(name: str):
     """
     Get general information about a vendor
-    :param name: name of the vendor
-    :return: the vendor hash, its icon, its original icon, its detinations
+    @param name: name of the vendor
+    @return: the vendor hash, its icon, its original icon, its detinations
     """
 
     data = vendor_dic()
@@ -266,6 +266,12 @@ def get_vendor(name: str):
 
 
 def get_weekly_activities(headers: dict):
+    """
+    Get the dictionary of activities based on activities
+    @param headers: headers of the request
+    @return: the dictionary of activities
+    """
+
     me = server_application.me
     path = root + str(me.membership_types[0]) + '/Profile/' + str(me.membership_ids[0]) + '/Character/' + str(
         me.character_ids[2]) + '/?components=204'
@@ -280,6 +286,12 @@ def get_weekly_activities(headers: dict):
 
 
 def get_weekly_nf(activities: dict):
+    """
+    Get this week's Nightfall
+    @param activities: dictionary containing all activities available
+    @return: Nightfall name
+    """
+
     activity_dictionary = activity_dic()
     act = None
     found = False
@@ -298,6 +310,12 @@ def get_weekly_nf(activities: dict):
 
 
 def get_weekly_challenges(activities: dict):
+    """
+    Get this week's raid challenges
+    @param activities: dictionary containing all activities available
+    @return: raid name, challenge name and challenge description
+    """
+
     vow_hash = 4217492330
     vog_hash = 1681562271
     gos_hash = 2497200493
@@ -337,6 +355,12 @@ def get_weekly_challenges(activities: dict):
 
 
 def get_weekly_hunts(activities: dict):
+    """
+    Get this week's Empire and Nightmare hunts
+    @param activities: dictionary containing all activities available
+    @return: name of all available hunts
+    """
+
     activity_dictionary = activity_dic()
     rotate = []
     for activity in activities['Response']['activities']['data']['availableActivities']:
@@ -355,7 +379,13 @@ def get_weekly_hunts(activities: dict):
     return rotate
 
 
-def get_weekly_test(headers: dict):
+def get_weekly_progression(headers: dict):
+    """
+    Get the dictionary of activities based on progression
+    @param headers: headers of the request
+    @return: the dictionary of activities
+    """
+
     me = server_application.me
     path = root + str(me.membership_types[0]) + '/Profile/' + str(me.membership_ids[0]) + '/Character/' + str(
         me.character_ids[2]) + '/?components=202'
@@ -368,6 +398,12 @@ def get_weekly_test(headers: dict):
 
 
 def get_rank_boost(activities: dict):
+    """
+    Get this week's rank boost
+    @param activities: dictionary containing all activities available
+    @return: the name of the boost and "Double Nightfall Drops" if it is active
+    """
+
     boost = ""
     double_rewards = ""
     for activity in activities['Response']['activities']['data']['availableActivities']:
@@ -385,18 +421,36 @@ def get_rank_boost(activities: dict):
 
 
 def check_pvp_mode(hash_: str):
+    """
+    Check if the current has is a usual pvp gamemode
+    @param hash_: the hash to test
+    @return: True: is not a common gamemode, False otherwise
+    """
+
     if hash_ == 1717505396 or hash_ == 1957660400 or hash_ == 1957660400 or hash_ == 1683791010 or hash_ == 3283279668 or hash_ == 2259621230:
         return False
     return True
 
 
 def check_banner(hash_: str):
+    """
+    Check if the current hash is iron banner
+    @param hash_: the hash to test
+    @return: True: is Iron Banner, False otherwise
+    """
+
     if hash_ == 1683791010:
         return True
     return False
 
 
 def get_weekly_pvp_mode(activities: dict):
+    """
+    Get this week's pvp mode
+    @param activities: dictionary containing all activities available
+    @return: the name of the pvp mode
+    """
+
     activity_dictionary = activity_dic()
     res = []
     for activity in activities['Response']['progressions']['data']['milestones']['3312774044']['activities']:
@@ -411,6 +465,11 @@ def get_weekly_pvp_mode(activities: dict):
 
 
 def get_weekly():
+    """
+    Get this week information
+    @return: a list of embed containing nightfall, raid challenges, hunts, pvp mode, rank boost and double rewards
+    """
+
     me = server_application.me
     headers = {"X-API-Key": my_api_key,
                "Authorization": access_token + me.token['access_token']}
@@ -422,10 +481,9 @@ def get_weekly():
     hunts = get_weekly_hunts(activities)
     boost, double_rewards = get_rank_boost(activities)
 
-    activities = get_weekly_test(headers)
+    activities = get_weekly_progression(headers)
 
     pvp_mode = get_weekly_pvp_mode(activities)
 
     res = [nf, challenges, hunts, pvp_mode, boost, double_rewards]
-    print(res)
     return embed.weekly_embed(res)

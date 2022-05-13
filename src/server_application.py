@@ -1,6 +1,8 @@
 # File containing every functions that are necessary to get the access token
 
 # imports
+import logging
+
 import flask
 import time
 import requests
@@ -141,7 +143,7 @@ def redirect():
         'refresh_token': resp['refresh_token'],
         'refresh_expires': time.time() + resp['refresh_expires_in']
     }
-    print("access token saved")
+    logging.info("Access token saved")
     return flask.redirect('/end')
 
 
@@ -179,5 +181,5 @@ def refresh():
     df = pd.DataFrame(data_)
     df.to_csv('../data.csv')
 
-    print("refresh token used and access token saved")
+    logging.info("Refresh token used and access token saved")
     return flask.redirect('/end')

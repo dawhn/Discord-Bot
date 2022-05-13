@@ -1,5 +1,5 @@
 import discord
-token = 'Nzk5MzgxMTIxMzAwNTYxOTgx.YACvrw.UoqHC8LU4_Szf6l3ASzGBPNqvjc'
+token = 'Nzk5MzgxMTIxMzAwNTYxOTgx.GgBcSS.Nkb7jQ1zfdN-a9ib_HYwS1hIlDA_jW8hhmIuj8'
 my_api_key = '259d627dd9e34681a7111283a8f244ef'
 root = "https://www.bungie.net/Platform/Destiny2/"
 icon_root = "https://www.bungie.net"

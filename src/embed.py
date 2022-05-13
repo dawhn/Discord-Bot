@@ -309,46 +309,64 @@ def gm_stats_embed(gm: [], bungie_name: str):
 
 def weekly_embed(stats):
     nf_embed = discord.Embed(
-        title="Weekly rotating Nightfall:\n**" + stats[0] + "**",
+        title="Weekly rotating Nightfall:\n\n**__" + stats[0] + "__**",
         color=discord.Color.dark_blue()
     )
+    nf_embed.set_thumbnail(url="https://media.discordapp.net/attachments/963544576193355837/974334243952025700/unknown.png")
     if stats[5] != '':
         nf_embed.add_field(name="Double Nightfall rewards", value="All Nightfall loot drops are doubled.")
     nf_embed.set_image(url=images.strikes[stats[0]])
+    if stats[4] != '':
+        nf_embed.add_field(name=stats[4], value="➖")
 
     raid_embed = discord.Embed(
-        title="**Weekly raid challenges**",
+        title="**__Weekly raid challenges__**",
         color=discord.Color.light_grey()
     )
+    raid_embed.set_thumbnail(url="https://media.discordapp.net/attachments/963544576193355837/974334633175023656/unknown.png")
     raid_embed.set_image(url="https://media.discordapp.net/attachments/963544576193355837/964988469296369694/unknown.png?width=1117&height=571")
     for raid in stats[1]:
         val = ""
         val += raid[0] + "\n"
-        val += raid[2] + ": " + raid[3]
-        print(val)
+        # val += raid[2] + ": " + raid[3]
         raid_embed.add_field(name=raid[1], value=val)
 
+    detailed_raids = []
+    for i in range(4):
+        emb = discord.Embed(
+            title="**__Weekly " + stats[1][i][1] + " challenge__**",
+            color=discord.Color.light_grey(),
+            description= stats[1][i][2] + ": " + stats[1][i][3]
+        )
+        emb.set_thumbnail(url="https://media.discordapp.net/attachments/963544576193355837/974334633175023656/unknown.png")
+        emb.set_image(url="https://media.discordapp.net/attachments/963544576193355837/964988469296369694/unknown.png?width=1117&height=571")
+        detailed_raids.append(emb)
+
     hunt_embed = discord.Embed(
-        title="Weekly rotating empire hunt:\n**" + stats[2][0] + "**",
+        title="Weekly rotating empire hunt:\n**__" + stats[2][0] + "__**\n ",
         color=discord.Color.dark_blue()
     )
+    hunt_embed.set_thumbnail(url="https://media.discordapp.net/attachments/963544576193355837/974335301994577940/unknown.png")
     val = ""
-    for i in range(1, 3):
+    for i in range(1, 4):
         val += stats[2][i] + "\n"
-    hunt_embed.add_field(name="Weekly rotating nightmare hunts", value=val)
+    hunt_embed.add_field(name="Weekly rotating Nightmare Hunts:", value=val)
     hunt_embed.set_image(url=images.empire_hunt[stats[2][0]])
 
     wq_embed = discord.Embed(
-        title="Weekly rotating Witch queen campaign mission:\n**" + stats[2][4] + "**",
+        title="Weekly rotating Witch Queen campaign mission:\n\n**__" + stats[2][4] + "__**",
         color=discord.Color.green()
     )
+    wq_embed.set_thumbnail(url="https://media.discordapp.net/attachments/963544576193355837/974335270084300962/unknown.png")
     wq_embed.set_image(url=images.wq_campaign[stats[2][4]])
 
     pvp_embed = discord.Embed(
-        title="Weekly rotating pvp mode:\n**" + stats[3][0],
+        title="Weekly rotating PvP mode:\n**__" + stats[3][0] + "__**",
         color=discord.Color.red()
     )
+    pvp_embed.set_thumbnail(url="https://media.discordapp.net/attachments/963544576193355837/974334493458563140/unknown.png")
     if len(stats[3]) > 1:
         pvp_embed.add_field(name="Iron Banner", value="This week is Iron Banner, no Trials of Osiris this weekend !")
+    pvp_embed.set_image(url="https://media.discordapp.net/attachments/963544576193355837/974339110791680001/unknown.png?width=1117&height=559")
 
-    return nf_embed, raid_embed, hunt_embed, wq_embed, pvp_embed
+    return nf_embed, raid_embed, hunt_embed, wq_embed, pvp_embed, detailed_raids

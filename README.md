@@ -26,5 +26,12 @@ Every secret token or just some usefull data is in data.py (not in this reposito
 
 ### V 1.4
 - Added selection of default channel for each guild (server). On launch or on server join, the bot will ask for a channel tag by a user (can be anyone for now) and save that id in a .csv to be able to retreive it later to send automatic message.
-- Send an automatic message on all servers containing Xur's information at its reset (Friday at 7PM)
-- Send an automatic message on all servers containing Banshee-44's information at its reset (Tuesday at 7PM)
+- Send an automatic message on all servers containing Xur's information at its reset (Friday at 7PM CEST)
+- Send an automatic message on all servers containing Banshee-44's information at its reset (Tuesday at 7PM CEST)
+
+### V 1.5
+- Fixed when a server is already joined but no default channel has been sent (ask again for a channel and add it to the existing csv).
+- /weekly command: return useful information about weekly reset (weekly Nightfall, weekly raid challenges, weekly hunts, weekly Witch queen campaign mission, weekly pvp gamemode and weekly rank boost).
+- This command returns an embed that has many buttons to switch view between all possible information and when on the raid view has a select menu to chose details about a specific raid.
+- Removed /banshee information on weekly reset on Tuesday and added /weekly information instead.
+- Delayed automatic information on Tuesday / Friday reset from 19:00 to 19:02 CEST in order to make sure the update on the API has been concluded
