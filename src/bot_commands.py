@@ -3,11 +3,12 @@ import time
 import logging
 
 # from imports
+import discord
 from discord_slash import SlashCommand, SlashContext
 from discord_slash.model import ButtonStyle
 from discord_slash.utils.manage_components import create_button, create_actionrow, wait_for_component, create_select, \
     create_select_option
-from discord_slash.utils.manage_commands import create_option
+from discord_slash.utils.manage_commands import create_option, create_choice
 
 # file imports
 import api_requests
@@ -15,6 +16,7 @@ import player_stats
 import automatic_commands
 import embed
 import server_application
+import classes.class_json
 
 # from file imports
 from data import myBot
@@ -138,11 +140,12 @@ async def weekly(msg: SlashContext):
     @param msg: Slash command message send by a user
     """
 
-    await msg.defer()
+    # await msg.defer()
+    auth = msg.author_id
     me = server_application.me
     if time.time() > me.token['access_expires']:
         api_requests.refresh_token()
-    embeds = automatic_commands.weekly_embeds
+    embeds = automatic_commands.weekly_embeds[0]
     style = ButtonStyle.blue
     button_nf = [create_button(style=style, label="Nightfalls")]
     button_raid = [create_button(style=style, label="Raids")]
@@ -168,43 +171,103 @@ async def weekly(msg: SlashContext):
     logging.info("/weekly command send")
     while 1:
         inter = await wait_for_component(myBot, components=action_row)
-        if inter.values is None:
-            if inter.component['label'] == 'Nightfalls':
-                pos = 0
-                d_pos = 0
-                style = ButtonStyle.blue
-            if inter.component['label'] == 'Raids':
-                pos = 1
-                d_pos = 0
-                style = ButtonStyle.gray
-            if inter.component['label'] == 'Hunts':
-                pos = 2
-                d_pos = 0
-                style = ButtonStyle.blue
-            if inter.component['label'] == 'Witch Queen':
-                pos = 3
-                d_pos = 0
-                style = ButtonStyle.green
-            if inter.component['label'] == 'PVP':
-                pos = 4
-                d_pos = 0
-                style = ButtonStyle.red
+        if inter.author.id != auth and not inter.author.guild_permissions.administrator:
+            await inter.send('You cannot do that', hidden=True)
         else:
-            d_pos = int(inter.values[0])
+            if inter.values is None:
+                if inter.component['label'] == 'Nightfalls':
+                    pos = 0
+                    d_pos = 0
+                    style = ButtonStyle.blue
+                if inter.component['label'] == 'Raids':
+                    pos = 1
+                    d_pos = 0
+                    style = ButtonStyle.gray
+                if inter.component['label'] == 'Hunts':
+                    pos = 2
+                    d_pos = 0
+                    style = ButtonStyle.blue
+                if inter.component['label'] == 'Witch Queen':
+                    pos = 3
+                    d_pos = 0
+                    style = ButtonStyle.green
+                if inter.component['label'] == 'PVP':
+                    pos = 4
+                    d_pos = 0
+                    style = ButtonStyle.red
+            else:
+                d_pos = int(inter.values[0])
 
-        button_nf = [create_button(style=style, label="Nightfalls")]
-        button_raid = [create_button(style=style, label="Raids")]
-        button_hunt = [create_button(style=style, label="Hunts")]
-        button_wq = [create_button(style=style, label="Witch Queen")]
-        button_pvp = [create_button(style=style, label="PVP")]
+            button_nf = [create_button(style=style, label="Nightfalls")]
+            button_raid = [create_button(style=style, label="Raids")]
+            button_hunt = [create_button(style=style, label="Hunts")]
+            button_wq = [create_button(style=style, label="Witch Queen")]
+            button_pvp = [create_button(style=style, label="PVP")]
 
 
-        action_row = [create_actionrow(*button_nf, *button_raid, *button_hunt, *button_wq, *button_pvp)]
-        if pos == 1:
-            action_row.append(create_actionrow(select))
-        if d_pos == 0:
-            await inter.edit_origin(embed=embeds[pos], components=action_row)
+            action_row = [create_actionrow(*button_nf, *button_raid, *button_hunt, *button_wq, *button_pvp)]
+            if pos == 1:
+                action_row.append(create_actionrow(select))
+            if d_pos == 0:
+                await inter.edit_origin(embed=embeds[pos], components=action_row)
+            else:
+                await inter.edit_origin(embed=embeds[5][d_pos], components=action_row)
+
+
+@slash.slash(name="Activity",
+             description="Get player stats",
+             options=[
+                 create_option(
+                     name="type",
+                     description="Which type of activity (Raid, PVE, PVP, Gambit)",
+                     required=True,
+                     option_type=3,
+                     choices=[
+                         create_choice(name="Raid", value="Raid"),
+                         create_choice(name="PVE", value="PVE"),
+                         create_choice(name="PVP", value="PVP"),
+                         create_choice(name="Gambit", value="Gambit")
+                     ]
+                 ),
+                 create_option(
+                     name="name",
+                     description="Name of your activity",
+                     required=True,
+                     option_type=3
+                 ),
+                 create_option(
+                     name="description",
+                     description="Description of your activity",
+                     required=True,
+                     option_type=3
+                 ),
+                 create_option(
+                     name="schedule",
+                     description="Schedule of your activity",
+                     required=True,
+                     option_type=3
+                 )
+             ])
+async def activity(msg: SlashContext, type: str, name: str, description: str, schedule: str):
+    act = classes.class_json.Activity(name, description, schedule, type, msg.author.name, msg.author.id)
+    button_yes = [create_button(style=ButtonStyle.green, label="Register")]
+    button_maybe = [create_button(style=ButtonStyle.gray, label="Maybe")]
+    button_destroy = [create_button(style=ButtonStyle.red, label="Cancel")]
+    action_row = [create_actionrow(*button_yes, *button_maybe, *button_destroy)]
+    await msg.send(embed=act.to_embed(), components=action_row)
+    while 1:
+        inter = await wait_for_component(myBot, components=action_row)
+        if inter.component['label'] == 'Register':
+            act.add_player(inter.author.name, 'Register')
+        if inter.component['label'] == 'Maybe':
+            act.add_player(inter.author.name, 'Maybe')
+        if inter.component['label'] == 'Cancel':
+            if inter.author.id == act.author_id or inter.author.guild_permissions.administrator:
+                print("same")
+                await inter.edit_origin(content="")
+                await inter.origin_message.delete()
+            else:
+                print("different")
+                await inter.send('You cannot do that', hidden=True)
         else:
-            await inter.edit_origin(embed=embeds[5][d_pos], components=action_row)
-
-# activity demand like echo eternel bot (with buttons
+            await inter.edit_origin(embed=act.to_embed(), components=action_row)

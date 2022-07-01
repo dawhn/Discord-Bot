@@ -2,7 +2,7 @@
 
 empire_hunt = {
     "Empire Hunt: The Technocrat": "https://media.discordapp.net/attachments/963544576193355837/973355775395254322/unknown.png?width=1116&height=570",
-    "Empire Hunt: The Dark Priest": "https://media.discordapp.net/attachments/963544576193355837/973355869603520532/unknown.png?width=1116&height=570",
+    "Empire Hunt: The Dark Priestess": "https://media.discordapp.net/attachments/963544576193355837/973355869603520532/unknown.png?width=1116&height=570",
     "Empire Hunt: The Warrior": "https://media.discordapp.net/attachments/963544576193355837/973355939392553000/unknown.png?width=1116&height=570"
 }
 

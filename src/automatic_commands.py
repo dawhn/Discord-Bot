@@ -42,10 +42,10 @@ async def before_reset():
     """
 
     hour = 17
-    minute = 2
+    minute = 00
     await myBot.wait_until_ready()
     now = datetime.datetime.now(datetime.timezone.utc)
-    future = datetime.datetime(now.year, now.month, now.day, hour, minute)
+    future = datetime.datetime(now.year, now.month, now.day, hour, minute, tzinfo=datetime.timezone.utc)
     if now.hour >= hour and now.minute >= minute:
         future += datetime.timedelta(days=1)
     await asyncio.sleep((future - now).seconds)
@@ -88,7 +88,7 @@ def xur_load(overload: bool):
     """
 
     if overload or len(vendor_embeds) == 1 or datetime.datetime.now(datetime.timezone.utc).weekday() == 4:
-        print('xur loaded')
+        logging.info('xur loaded')
         vendor_embeds.append(api_requests.sales_vendor('Xûr'))
 
 
@@ -98,6 +98,7 @@ def banshee_load():
     """
 
     if datetime.datetime.now(datetime.timezone.utc).weekday() == 1:
+        logging.info('banshee loaded')
         vendor_embeds.pop()
         vendor_embeds[0] = api_requests.sales_vendor('Banshee-44')
 
@@ -107,6 +108,7 @@ def weekly_load():
     Load weekly data and update weekly_embeds
     """
     if datetime.datetime.now(datetime.timezone.utc).weekday() == 1:
+        logging.info('weekly loaded')
         global weekly_embeds
         weekly_embeds = api_requests.get_weekly()
 
@@ -146,66 +148,9 @@ async def banshee_auto(chan):
 
 
 async def weekly_auto(chan):
-    embeds = weekly_embeds
-    style = ButtonStyle.blue
-    button_nf = [create_button(style=style, label="Nightfalls")]
-    button_raid = [create_button(style=style, label="Raids")]
-    button_hunt = [create_button(style=style, label="Hunts")]
-    button_wq = [create_button(style=style, label="Witch Queen")]
-    button_pvp = [create_button(style=style, label="PVP")]
+    """
+    Send an embed with the weekly data.
+    @param chan: the channel to send th embed
+    """
 
-    action_row = [create_actionrow(*button_nf, *button_raid, *button_hunt, *button_wq, *button_pvp)]
-
-    select = create_select(
-        options=[
-            create_select_option("Vow of the Disciple", value='0'),
-            create_select_option("Vault of Glass", value="1"),
-            create_select_option("Garden of Salvation", value="2"),
-            create_select_option("Deep Stone Crypt", value="3")
-        ],
-        placeholder="Choose a raid for details"
-    )
-
-    pos = 0
-    d_pos = 0
-    await chan.send(embed=embeds[pos], components=action_row)
-    logging.info("/weekly command send")
-    while 1:
-        inter = await wait_for_component(myBot, components=action_row)
-        if inter.values is None:
-            if inter.component['label'] == 'Nightfalls':
-                pos = 0
-                d_pos = 0
-                style = ButtonStyle.blue
-            if inter.component['label'] == 'Raids':
-                pos = 1
-                d_pos = 0
-                style = ButtonStyle.gray
-            if inter.component['label'] == 'Hunts':
-                pos = 2
-                d_pos = 0
-                style = ButtonStyle.blue
-            if inter.component['label'] == 'Witch Queen':
-                pos = 3
-                d_pos = 0
-                style = ButtonStyle.green
-            if inter.component['label'] == 'PVP':
-                pos = 4
-                d_pos = 0
-                style = ButtonStyle.red
-        else:
-            d_pos = int(inter.values[0])
-
-        button_nf = [create_button(style=style, label="Nightfalls")]
-        button_raid = [create_button(style=style, label="Raids")]
-        button_hunt = [create_button(style=style, label="Hunts")]
-        button_wq = [create_button(style=style, label="Witch Queen")]
-        button_pvp = [create_button(style=style, label="PVP")]
-
-        action_row = [create_actionrow(*button_nf, *button_raid, *button_hunt, *button_wq, *button_pvp)]
-        if pos == 1:
-            action_row.append(create_actionrow(select))
-        if d_pos == 0:
-            await inter.edit_origin(embed=embeds[pos], components=action_row)
-        else:
-            await inter.edit_origin(embed=embeds[5][d_pos], components=action_row)
+    await chan.send(embed=weekly_embeds[1])

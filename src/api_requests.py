@@ -297,7 +297,7 @@ def get_weekly_nf(activities: dict):
     found = False
     for activity in activities['Response']['activities']['data']['availableActivities']:
         if 'recommendedLight' in activity:
-            if activity['recommendedLight'] == 1580:
+            if activity['recommendedLight'] == 1590:
                 for activity_hash, activity_def in activity_dictionary['DestinyActivityDefinition'].items():
                     if found:
                         break
@@ -365,7 +365,7 @@ def get_weekly_hunts(activities: dict):
     rotate = []
     for activity in activities['Response']['activities']['data']['availableActivities']:
         if 'recommendedLight' in activity:
-            if activity['recommendedLight'] == 1580:
+            if activity['recommendedLight'] == 1590:
                 for activity_hash, activity_def in activity_dictionary['DestinyActivityDefinition'].items():
                     if activity['activityHash'] == activity_hash:
                         name = activity_def['displayProperties']['name']
@@ -388,7 +388,7 @@ def get_weekly_progression(headers: dict):
 
     me = server_application.me
     path = root + str(me.membership_types[0]) + '/Profile/' + str(me.membership_ids[0]) + '/Character/' + str(
-        me.character_ids[2]) + '/?components=202'
+        me.character_ids[1]) + '/?components=202'
     r = requests.get(path, headers=headers)
     resp = r.json()
     if resp['ErrorCode'] != 1 or resp['ErrorStatus'] != 'Success':
@@ -404,17 +404,17 @@ def get_rank_boost(activities: dict):
     @return: the name of the boost and "Double Nightfall Drops" if it is active
     """
 
-    boost = ""
+    boost = []
     double_rewards = ""
     for activity in activities['Response']['activities']['data']['availableActivities']:
         if 'modifierHashes' in activity:
             for modifier in activity['modifierHashes']:
-                if modifier == 3874605433:
-                    boost = "Double Crucible Rank"
-                if modifier == 745014575:
-                    boost = "Double Vanguard Rank"
-                if modifier == 3228023383:
-                    modifier = "Double Gambit Rank"
+                if modifier == 3874605433 and "Double Crucible Rank" not in boost:
+                    boost.append("Double Crucible Rank")
+                if modifier == 745014575 and "Double Vanguard Rank" not in boost:
+                    boost.append("Double Vanguard Rank")
+                if modifier == 3228023383 and "Double Gambit Rank" not in boost:
+                    boost.append("Double Gambit Rank")
                 if modifier == 1171597537:
                     double_rewards = "Double Nightfall Drops"
     return boost, double_rewards
@@ -486,4 +486,4 @@ def get_weekly():
     pvp_mode = get_weekly_pvp_mode(activities)
 
     res = [nf, challenges, hunts, pvp_mode, boost, double_rewards]
-    return embed.weekly_embed(res)
+    return embed.weekly_embed(res), embed.automatic_weekly_embed(res)

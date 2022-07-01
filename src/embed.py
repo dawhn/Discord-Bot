@@ -48,14 +48,12 @@ def xur_embed(items: [()], icon_url: str, original_icon_url: str):
                 legendary_armor += '> - ' + item[0] + '\n'
     embed.add_field(name="<:exotic_weapon:963119052019077180> __Exotic Weapons__", value=exotic_weapons, inline=True)
     embed.add_field(name="<:exotic_armor:963113323501584384> __Exotic Armors__", value=exotic_armor, inline=True)
-    embed.add_field(name="➖➖➖➖➖➖➖➖➖➖", value="➖➖➖➖➖➖➖➖➖➖", inline=False)
+    embed.add_field(name="\u200b", value="\u200b", inline=False)
     embed.add_field(name="<:legendary_weapon:963081886295547915> __Legendary Weapons__", value=legendary_weapons,
                     inline=True)
     embed.add_field(name="<:legendary_armor:963113337384738826> __Legendary Armors__", value=legendary_armor,
                     inline=True)
-    today = datetime.datetime.now(datetime.timezone.utc)
-    date = today.strftime("%d/%m/%Y")
-    embed.set_footer(text=date)
+    embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     return embed
 
@@ -139,8 +137,8 @@ def xur_detail_embed(items: [()], index: int, items_perks: [()], stats: [()]):
     embed.add_field(name="<:exotic_weapon:963119052019077180> __Exotic Weapons__", value=exotic_weapons, inline=True)
     embed.add_field(name="<:legendary_weapon:963081886295547915> __Legendary Weapons__", value=legendary_weapons,
                     inline=True)
-    footer = 'Xur is at ' + name_destinations[index]
-    embed.set_footer(text=footer)
+    embed.add_field(name="Xur's destination:", value=name_destinations[index], inline=False)
+    embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     return embed
 
@@ -171,9 +169,7 @@ def gunsmith_embed(items: [()], icon_url: str, original_icon_url: str):
             mods += '> - ' + item[0] + '\n'
     embed.add_field(name="<:weapon:963081886295547915> __Weapons__", value=weapons, inline=True)
     embed.add_field(name="<:empty_socket:963080068362551306> __Mods__ ", value=mods, inline=True)
-    today = datetime.datetime.now(datetime.timezone.utc)
-    date = today.strftime("%d/%m/%Y")
-    embed.set_footer(text=date)
+    embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     return embed
 
@@ -205,9 +201,7 @@ def gunsmith_detail_embed(items: [()], original_icon_url):
             # weapons += item[i] + " "
         weapons += '\n\n'
     embed.add_field(name="<:weapon:963081886295547915> __Weapons__", value=weapons, inline=True)
-    today = datetime.datetime.now(datetime.timezone.utc)
-    date = today.strftime("%d/%m/%Y")
-    embed.set_footer(text=date)
+    embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     return embed
 
@@ -234,10 +228,7 @@ def raid_stats_embed(raid: [], bungie_name: str):
     embed.add_field(name="__Raid__", value=name)
     embed.add_field(name="__Clears__", value=count)
     embed.set_image(url='https://media.discordapp.net/attachments/963544576193355837/964988469296369694/unknown.png')
-
-    today = datetime.datetime.now(datetime.timezone.utc)
-    date = today.strftime("%d/%m/%Y")
-    embed.set_footer(text=date)
+    embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     return embed
 
@@ -265,10 +256,7 @@ def dungeon_stats_embed(dungeon: [], bungie_name: str):
     embed.add_field(name="__Dungeon__", value=name)
     embed.add_field(name="__Clears__", value=count)
     embed.set_image(url='https://media.discordapp.net/attachments/963544576193355837/964988469296369694/unknown.png')
-
-    today = datetime.datetime.now(datetime.timezone.utc)
-    date = today.strftime("%d/%m/%Y")
-    embed.set_footer(text=date)
+    embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     return embed
 
@@ -299,11 +287,7 @@ def gm_stats_embed(gm: [], bungie_name: str):
     embed.add_field(name="__Clears__", value=count)
     embed.set_image(url="https://media.discordapp.net/attachments/963544576193355837/967190183512518666/unknown.png"
                         "?width=1189&height=600")
-
-    today = datetime.datetime.now(datetime.timezone.utc)
-    date = today.strftime("%d/%m/%Y")
-    embed.set_footer(text=date)
-
+    embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
     return embed
 
 
@@ -316,8 +300,14 @@ def weekly_embed(stats):
     if stats[5] != '':
         nf_embed.add_field(name="Double Nightfall rewards", value="All Nightfall loot drops are doubled.")
     nf_embed.set_image(url=images.strikes[stats[0]])
-    if stats[4] != '':
-        nf_embed.add_field(name=stats[4], value="➖")
+    if stats[4]:
+        val = ""
+        for i in stats[4]:
+            if "Double Vanguard Rank" in i:
+                val = i
+        if val != "":
+            nf_embed.add_field(name=val, value="\u200b")
+    nf_embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     raid_embed = discord.Embed(
         title="**__Weekly raid challenges__**",
@@ -328,11 +318,11 @@ def weekly_embed(stats):
     for raid in stats[1]:
         val = ""
         val += raid[0] + "\n"
-        # val += raid[2] + ": " + raid[3]
         raid_embed.add_field(name=raid[1], value=val)
+    raid_embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     detailed_raids = []
-    for i in range(4):
+    for i in range(3):
         emb = discord.Embed(
             title="**__Weekly " + stats[1][i][1] + " challenge__**",
             color=discord.Color.light_grey(),
@@ -340,6 +330,7 @@ def weekly_embed(stats):
         )
         emb.set_thumbnail(url="https://media.discordapp.net/attachments/963544576193355837/974334633175023656/unknown.png")
         emb.set_image(url="https://media.discordapp.net/attachments/963544576193355837/964988469296369694/unknown.png?width=1117&height=571")
+        emb.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
         detailed_raids.append(emb)
 
     hunt_embed = discord.Embed(
@@ -352,21 +343,75 @@ def weekly_embed(stats):
         val += stats[2][i] + "\n"
     hunt_embed.add_field(name="Weekly rotating Nightmare Hunts:", value=val)
     hunt_embed.set_image(url=images.empire_hunt[stats[2][0]])
+    hunt_embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     wq_embed = discord.Embed(
         title="Weekly rotating Witch Queen campaign mission:\n\n**__" + stats[2][4] + "__**",
         color=discord.Color.green()
     )
+    if stats[4]:
+        val = ""
+        for i in stats[4]:
+            if "Double Gambit Rank" in i:
+                val = i
+        if val != "":
+            wq_embed.add_field(name=val, value="\u200b")
     wq_embed.set_thumbnail(url="https://media.discordapp.net/attachments/963544576193355837/974335270084300962/unknown.png")
     wq_embed.set_image(url=images.wq_campaign[stats[2][4]])
+    wq_embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     pvp_embed = discord.Embed(
         title="Weekly rotating PvP mode:\n**__" + stats[3][0] + "__**",
         color=discord.Color.red()
     )
+    if stats[4]:
+        val = ""
+        for i in stats[4]:
+            if "Double Crucible Rank" in i:
+                val = i
+        if val != "":
+            pvp_embed.add_field(name=val, value="\u200b")
+
     pvp_embed.set_thumbnail(url="https://media.discordapp.net/attachments/963544576193355837/974334493458563140/unknown.png")
     if len(stats[3]) > 1:
         pvp_embed.add_field(name="Iron Banner", value="This week is Iron Banner, no Trials of Osiris this weekend !")
     pvp_embed.set_image(url="https://media.discordapp.net/attachments/963544576193355837/974339110791680001/unknown.png?width=1117&height=559")
+    pvp_embed.set_footer(text="Dawhn#5398", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
 
     return nf_embed, raid_embed, hunt_embed, wq_embed, pvp_embed, detailed_raids
+
+
+def automatic_weekly_embed(stats):
+    today = datetime.date.today()
+    month = today.strftime("%b")
+    day_b = today.strftime("%d")
+    end = datetime.date.today() + datetime.timedelta(days=7)
+    day_e = end.strftime("%d")
+    embed = discord.Embed(
+        title="**Weekly Reset**",
+        description=month + " " + day_b + " - " + day_e
+    )
+
+    if stats[4] != '':
+        embed.add_field(name=stats[4][0], value="\u200b")
+    if len(stats[3]) > 1:
+        embed.add_field(name="Iron Banner", value="This week is Iron Banner, no Trials of Osiris this weekend !")
+
+    embed.add_field(name="__**Weekly Nightfall**__", value=stats[0])
+
+    raid_ = ""
+    for raid in stats[1]:
+        raid_ += raid[1] + ": " + raid[0] + "\n"
+    embed.add_field(name="__**Weekly Raid challenges**__", value=raid_, inline=False)
+
+    hunt_ = ""
+    for i in range(0, 4):
+        hunt_ += stats[2][i] + "\n"
+    embed.add_field(name="__**Weekly Hunts**__", value=hunt_)
+
+    embed.add_field(name="__**Weekly Witch Queen campaign**__", value=stats[2][4])
+
+    embed.add_field(name="__**Weekly PVP mode**__", value=stats[3][0])
+    embed.set_footer(text="**Dawhn#5398**", icon_url="https://media.discordapp.net/attachments/963544576193355837/977572811612774440/unknown.png")
+
+    return embed

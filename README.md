@@ -36,3 +36,12 @@ Every secret token or just some usefull data is in data.py (not in this reposito
 - Removed /banshee information on weekly reset on Tuesday and added /weekly information instead.
 - Delayed automatic information on Tuesday / Friday reset from 19:00 to 19:02 CEST in order to make sure the update on the API has been concluded
 - Changed from 19:02 CEST to 17:02 UTC to make it easier for different timezone
+
+### V 1.6
+- Added /activity command, allow to create an activity amongst different activity types.
+- Can personnalized many aspect of the activity to matcht the author's willing.
+- Anyone can Register by clicking the register button and remove itself from the registration by clicking again on the Register button
+- Same goes for the Maybe button
+- Only the activity's author or an admin can delete the activity, anyone else will receive a hidden message telling them they cannot.
+- Changed automatic weekly to not have any buttons (in order to allow anyone to have the information they are looking for)
+- Begined changed to create a backend server as well as a fronted in JavaScript which will allow to create a cleaner representation of the data.
