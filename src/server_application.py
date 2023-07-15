@@ -3,10 +3,10 @@
 # imports
 import logging
 
-import flask
 import time
 import requests
 import pandas as pd
+import flask
 
 # from imports
 from flask import Flask, request
@@ -64,13 +64,14 @@ class Application:
 me = Application(39929, 'TMoN2NYNXc10FtI5OuIc0DnL6v7NewvqFHJxJ6bt21Q', '0.0.0.0', 5000, my_api_key)
 
 
-def get_stored_informations():
+def get_stored_informations(m=None):
     """
     Check for wether data about the access_token is stored locall or not
     - Yes: Parse it to the object me of the classes Application
     - No: Do nothing
     :return: return wether ../data.csv exists
     """
+
     try:
         data_ = pd.read_csv(r'../data.csv')
     except FileNotFoundError as e:
@@ -78,10 +79,17 @@ def get_stored_informations():
         return False
     df = pd.DataFrame(data_)
     df = df.iloc[0]
-    me.token['access_token'] = df['access_token']
-    me.token['access_expires'] = df['access_expires']
-    me.token['refresh_token'] = df['refresh_token']
-    me.token['refresh_expires'] = df['refresh_expires']
+    if m is not None:
+        m.token['access_token'] = df['access_token']
+        m.token['access_expires'] = df['access_expires']
+        m.token['refresh_token'] = df['refresh_token']
+        m.token['refresh_expires'] = df['refresh_expires']
+    else:
+        global me
+        me.token['access_token'] = df['access_token']
+        me.token['access_expires'] = df['access_expires']
+        me.token['refresh_token'] = df['refresh_token']
+        me.token['refresh_expires'] = df['refresh_expires']
     return True
 
 

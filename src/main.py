@@ -10,23 +10,23 @@ import logging
 
 # from imports
 from discord.ext import commands
+from discord_slash import SlashCommand
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 # file imports
 import api_requests
 import automatic_commands
 import server_application
-import bot_commands
 
 # from file imports
 from data import token, myBot
+from bot_commands import slash
 from manifest import vendor_dic, item_dic, location_dic
 from discord_features import check_default_channels
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 bot = commands.Bot('')
-# slash = SlashCommand(myBot, sync_commands=True)
 access_token = 'Bearer '
 app = server_application.app
 

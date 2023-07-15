@@ -10,8 +10,7 @@ import pandas as pd
 # from imports
 from discord.ext import tasks
 from discord_slash import ButtonStyle
-from discord_slash.utils.manage_components import create_button, create_actionrow, wait_for_component, create_select, \
-    create_select_option
+from discord_slash.utils.manage_components import create_button, create_actionrow, wait_for_component
 from promise import Promise
 
 # file imports

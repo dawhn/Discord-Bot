@@ -6,6 +6,17 @@ empire_hunt = {
     "Empire Hunt: The Warrior": "https://media.discordapp.net/attachments/963544576193355837/973355939392553000/unknown.png?width=1116&height=570"
 }
 
+lf_campaign = {
+    "First Contact": "https://www.bungie.net/img/destiny_content/pgcr/lightfall_mission_chaos_orbit.jpg",
+    "Under Siege": "https://www.bungie.net/img/destiny_content/pgcr/lightfall_mission_haste.jpg",
+    "Downfall": "https://www.bungie.net/img/destiny_content/pgcr/lightfall_mission_lancer.jpg",
+    "Breakneck": "https://www.bungie.net/img/destiny_content/pgcr/lightfall_mission_lockdown.jpg",
+    "On the Verge": "https://www.bungie.net/img/destiny_content/pgcr/lightfall_mission_workout.jpg",
+    "No Time Left": "https://www.bungie.net/img/destiny_content/pgcr/lightfall_mission_beastmaster.jpg",
+    "Headlong": "https://www.bungie.net/img/destiny_content/pgcr/lightfall_mission_unleashed.jpg",
+    "Desperate Measures": "https://www.bungie.net/img/destiny_content/pgcr/lightfall_mission_suplex.jpg"
+}
+
 wq_campaign = {
     "The Arrival": "https://media.discordapp.net/attachments/963544576193355837/973356407397163108/unknown.png?width=1116&height=570",
     "The Investigation": "https://media.discordapp.net/attachments/963544576193355837/973356676050743316/unknown.png?width=1116&height=570",
@@ -33,5 +44,9 @@ strikes = {
     "Fallen S.A.B.E.R.": "https://media.discordapp.net/attachments/963544576193355837/973622089707835401/unknown.png?width=1116&height=570",
     "Proving Grounds": "https://media.discordapp.net/attachments/963544576193355837/973622146695852102/unknown.png?width=1116&height=570",
     "The Lightblade": "https://media.discordapp.net/attachments/963544576193355837/973622195865661490/unknown.png?width=1116&height=570",
-    "Birthplace of the Vile": "https://media.discordapp.net/attachments/963544576193355837/973622259325485116/unknown.png?width=1116&height=570"
+    "Birthplace of the Vile": "https://media.discordapp.net/attachments/963544576193355837/973622259325485116/unknown.png?width=1116&height=570",
+    "PsiOps Battleground: Moon": "https://media.discordapp.net/attachments/963544576193355837/1125743686144229456/battleground_trespass_s16.png?width=1046&height=588",
+    "PsiOps Battleground: Cosmodrome": "https://media.discordapp.net/attachments/963544576193355837/1125743970228645888/battleground_nestegg_s16.png?width=1046&height=588",
+    "PsiOps Battleground: EDZ": "https://media.discordapp.net/attachments/963544576193355837/1125744092232564856/battleground_chainsaw_s16.png?width=1046&height=588"
+
 }

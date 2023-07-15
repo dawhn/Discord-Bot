@@ -96,73 +96,111 @@ DestinyChallenges = {
     # VOW challenges
     "Swift Destruction":
         [
-            "Vow of the Disciple", "Acquisition encounter", "All three Unstoppable Abominations must be killed within 5 seconds."
+            "Acquisition encounter", "All three Unstoppable Abominations must be killed within 5 seconds."
         ],
     "Base Information":
         [
-            "Vow of the Disciple", "Caretaker encounter", "You may only grab one symbol at a time."
+            "Caretaker encounter", "You may only grab one symbol at a time."
         ],
     "Defenses Down":
         [
-            "Vow of the Disciple", "Exhibition encounter", "Each player may only kill one Taken knight."
+            "Exhibition encounter", "Each player may only kill one Taken knight."
         ],
     "Looping Catalyst":
         [
-            "Vow of the Disciple", "Rhulk encounter", "Your fireteam cannot lose the Leeching Essence buff."
+            "Rhulk encounter", "Your fireteam cannot lose the Leeching Essence buff."
         ],
     # VOG Challenges
     "Wait for It...":
         [
-            "Vault of Glass", "Confluxes encounter", "Only defeat Wyverns while they're sacrificing.", "Vision of Confluence"
+            "Confluxes encounter", "Only defeat Wyverns while they're sacrificing.", "Vision of Confluence"
         ],
     "The Only Oracle For You":
         [
-            "Vault of Glass", "Oracle encounter", "Each player may not destroy the same oracle twice.", "Praedyth's Revenge"
+            "Oracle encounter", "Each player may not destroy the same oracle twice.", "Praedyth's Revenge"
         ],
     "Out of Its Way":
         [
-            "Vault of Glass", "Templar encounter", "Defeat the Templar without allowing it to teleport.", "Fatebringer"
+            "Templar encounter", "Defeat the Templar without allowing it to teleport.", "Fatebringer"
         ],
     "Strangers in Time":
         [
-            "Vault of Glass", "Gatekeepers encounter", "Defeat the Wyvern and Praetorian Minotaur enemies within 3 seconds of each other.", "Hezen Vengeance"
+            "Gatekeepers encounter", "Defeat the Wyvern and Praetorian Minotaur enemies within 3 seconds of each other.", "Hezen Vengeance"
         ],
     "Ensemble's Refrain":
         [
-            "Vault of Glass", "Atheon encounter", "Each player may not destroy more than one oracle per oracle wave.", "Corrective Measure"
+            "Atheon encounter", "Each player may not destroy more than one oracle per oracle wave.", "Corrective Measure"
         ],
     # GOS Challenges
     "A Link to the Chain":
         [
-            "Garden of Salvation", "First encounter", "All six fireteam members must replenish enlightment at the same time."
+            "First encounter", "All six fireteam members must replenish enlightment at the same time."
         ],
     "To the Top":
         [
-            "Garden of Salvation","Third encounter", "10 motes must be deposited at a time."
+            "Third encounter", "10 motes must be deposited at a time."
         ],
     "Zero to One Hundred":
         [
-            "Garden of Salvation","Fourth encounter", "Once you deposite motes, you have 10 seconds to fully fill the bank."
+            "Fourth encounter", "Once you deposite motes, you have 10 seconds to fully fill the bank."
         ],
     "Leftovers":
         [
-            "Garden of Salvation","First encounter", "Do not kill any of the Cyclops in the room where the Consecrated Mind is depositing Voltaic Overflow charges."
+            "First encounter", "Do not kill any of the Cyclops in the room where the Consecrated Mind is depositing Voltaic Overflow charges."
         ],
     # DSC Challenges
     "Red Rover":
         [
-            "Deep Stone Crypt", "First encounter", "All players have to be operator and shoot two pannels on lowe level (requires 3 phases)."
+            "First encounter", "All players have to be operator and shoot two pannels on lowe level (requires 3 phases)."
         ],
     "Copies of Copies":
         [
-            "Deep Stone Crypt", "Second encounter", "Do not send any Replication debuff out of an airlock."
+            "Second encounter", "Do not send any Replication debuff out of an airlock."
         ],
     "Of All Trades":
         [
-            "Deep Stone Crypt", "Thir encounter", "All players on the fireteam must do each role (operator, scanner, suppressor) once."
+            "Third encounter", "All players on the fireteam must do each role (operator, scanner, suppressor) once."
         ],
     "The Core Four":
         [
-            "Deep Stone Crypt", "Fourth encounter", "Players must dunk all four cores each time you can destroy Taniks' orange generator."
+            "Fourth encounter", "Players must dunk all four cores each time you can destroy Taniks' orange generator."
+        ],
+    # KF Challenges
+    "The Grass is Alwayes Greener":
+        [
+            "Totems encounter", "Players cannot take the same Brand type twice in a row."
+        ],
+    "Devious Thievery":
+        [
+            "Warpriest encounter", "Players must steal the Brand of the Initiate within a couple of seconds of taking the Brand Claimer buff."
+        ],
+    "Gaze Amaze":
+        [
+            "Golgoroth encounter", "Players must The gaze holder must tand in the Pool of Unclaimed Light when swapping the gaze."
+        ],
+    "Under Construction":
+        [
+            "Daughters encounter", "Players cannot stand on the same plate twice in a single phase."
+        ],
+    "Hands off":
+        [
+            "Oryx encounter", "Players must not kill the same Ogre or Light Eater Knight throughout the encounter."
+        ],
+    # RON Challenges
+    "Illuminated Torment":
+        [
+            "Cataclysm encounter", "All Tormentors must be killed by someone with the Field of Light buff."
+        ],
+    "Crossfire":
+        [
+            "Scission encounter", "Players can only shoot the launcher cystals on the opposite side."
+        ],
+    "Cosmic Equilibrium":
+        [
+            "Macrocosm encounter", "Players must move all dark planets to the left side and all light planets to the right side."
+        ],
+    "All Hands":
+        [
+            "Nezarec encounter", "Players must complete a node on each side, light and dark (both sides must be completed around the same time)."
         ]
 }

@@ -9,18 +9,19 @@ from discord_slash.model import ButtonStyle
 from discord_slash.utils.manage_components import create_button, create_actionrow, wait_for_component, create_select, \
     create_select_option
 from discord_slash.utils.manage_commands import create_option, create_choice
+from src.utils.activity_utils import get_all_gms, get_all_dungeons, get_all_raids
+from src.utils.inventory_utils import get_inventory
 
 # file imports
 import api_requests
-import player_stats
 import automatic_commands
-import embed
 import server_application
-import classes.class_json
+import classes.class_json as class_json
 
 # from file imports
-from data import myBot
+from data import myBot, icon_root
 from discord_features import check_xur
+
 
 slash = SlashCommand(myBot, sync_commands=True)
 
@@ -102,17 +103,12 @@ async def stats(msg: SlashContext, bungie_name: str):
         print("REFRESH CODE EXPIRE ONE YEAR AS PASSED")
     if time.time() > me.token['access_expires']:
         api_requests.refresh_token()
-    p = player_stats.player(bungie_name)
+    p = class_json.player(bungie_name)
 
-    raid_data = player_stats.get_all_raids(p)
-    dungeon_data = player_stats.get_all_dungeons(p)
-    gm_data = player_stats.get_all_gms(p)
-    dungeon_data.sort()
-    raid_data.sort()
-    raid_embed = embed.raid_stats_embed(raid_data, bungie_name)
-    dungeon_embed = embed.dungeon_stats_embed(dungeon_data, bungie_name)
-    gm_embed = embed.gm_stats_embed(gm_data, bungie_name)
-    data_embed = [raid_embed, dungeon_embed, gm_embed]
+    raid_data = get_all_raids(p)
+    dungeon_data = get_all_dungeons(p)
+    gm_data = get_all_gms(p)
+    activity_stats = class_json.ActivityStats(p, raid_data, dungeon_data, gm_data)
 
     select = create_select(
         options=[
@@ -123,12 +119,12 @@ async def stats(msg: SlashContext, bungie_name: str):
         placeholder="Choose your option"
     )
     action_row = create_actionrow(select)
-    await msg.send(embed=data_embed[0], components=[action_row])
+    await msg.send(embed=activity_stats.data_embed[0], components=[action_row])
     logging.info("/stats command send")
     while 1:
         inter = await wait_for_component(myBot, components=[action_row])
         pos = int(inter.values[0])
-        await inter.edit_origin(embed=data_embed[pos], components=[action_row])
+        await inter.edit_origin(embed=activity_stats.data_embed[pos], components=[action_row])
 
 
 @slash.slash(name="Weekly",
@@ -150,17 +146,19 @@ async def weekly(msg: SlashContext):
     button_nf = [create_button(style=style, label="Nightfalls")]
     button_raid = [create_button(style=style, label="Raids")]
     button_hunt = [create_button(style=style, label="Hunts")]
-    button_wq = [create_button(style=style, label="Witch Queen")]
+    button_campaign = [create_button(style=style, label="Campaign")]
     button_pvp = [create_button(style=style, label="PVP")]
 
-    action_row = [create_actionrow(*button_nf, *button_raid, *button_hunt, *button_wq, *button_pvp)]
+    action_row = [create_actionrow(*button_nf, *button_raid, *button_hunt, *button_campaign, *button_pvp)]
 
     select = create_select(
         options=[
             create_select_option("Vow of the Disciple", value='0'),
             create_select_option("Vault of Glass", value="1"),
             create_select_option("Garden of Salvation", value="2"),
-            create_select_option("Deep Stone Crypt", value="3")
+            create_select_option("Deep Stone Crypt", value="3"),
+            create_select_option("Vow of the Disciple", value='4'),
+            create_select_option("Root of the Nightmare", value="5")
         ],
         placeholder="Choose a raid for details"
     )
@@ -187,7 +185,7 @@ async def weekly(msg: SlashContext):
                     pos = 2
                     d_pos = 0
                     style = ButtonStyle.blue
-                if inter.component['label'] == 'Witch Queen':
+                if inter.component['label'] == 'Campaign':
                     pos = 3
                     d_pos = 0
                     style = ButtonStyle.green
@@ -201,11 +199,10 @@ async def weekly(msg: SlashContext):
             button_nf = [create_button(style=style, label="Nightfalls")]
             button_raid = [create_button(style=style, label="Raids")]
             button_hunt = [create_button(style=style, label="Hunts")]
-            button_wq = [create_button(style=style, label="Witch Queen")]
+            button_campaign = [create_button(style=style, label="Campaign")]
             button_pvp = [create_button(style=style, label="PVP")]
 
-
-            action_row = [create_actionrow(*button_nf, *button_raid, *button_hunt, *button_wq, *button_pvp)]
+            action_row = [create_actionrow(*button_nf, *button_raid, *button_hunt, *button_campaign, *button_pvp)]
             if pos == 1:
                 action_row.append(create_actionrow(select))
             if d_pos == 0:
@@ -218,7 +215,7 @@ async def weekly(msg: SlashContext):
              description="Get player stats",
              options=[
                  create_option(
-                     name="type",
+                     name="activity_type",
                      description="Which type of activity (Raid, PVE, PVP, Gambit)",
                      required=True,
                      option_type=3,
@@ -248,8 +245,8 @@ async def weekly(msg: SlashContext):
                      option_type=3
                  )
              ])
-async def activity(msg: SlashContext, type: str, name: str, description: str, schedule: str):
-    act = classes.class_json.Activity(name, description, schedule, type, msg.author.name, msg.author.id)
+async def activity(msg: SlashContext, activity_type: str, name: str, description: str, schedule: str):
+    act = class_json.Activity(name, description, schedule, activity_type, msg.author.name, msg.author.id)
     button_yes = [create_button(style=ButtonStyle.green, label="Register")]
     button_maybe = [create_button(style=ButtonStyle.gray, label="Maybe")]
     button_destroy = [create_button(style=ButtonStyle.red, label="Cancel")]
@@ -263,11 +260,55 @@ async def activity(msg: SlashContext, type: str, name: str, description: str, sc
             act.add_player(inter.author.name, 'Maybe')
         if inter.component['label'] == 'Cancel':
             if inter.author.id == act.author_id or inter.author.guild_permissions.administrator:
-                print("same")
                 await inter.edit_origin(content="")
                 await inter.origin_message.delete()
             else:
-                print("different")
                 await inter.send('You cannot do that', hidden=True)
         else:
             await inter.edit_origin(embed=act.to_embed(), components=action_row)
+
+
+@slash.slash(name="Loadout",
+             description="Get player loadout",
+             options=[
+                 create_option(
+                     name="bungie_name",
+                     description="Bungie name of the player",
+                     required=True,
+                     option_type=3
+                 )
+             ])
+async def loadout(msg: SlashContext, bungie_name: str):
+    """
+
+    @param msg: Slash command message send by the user
+    @param bungie_name: parameter of the slash command, correspond to a bungie name (has the format name#number)
+    @return:
+    """
+
+    await msg.defer()
+    me = server_application.me
+    if time.time() > me.token['refresh_expires']:
+        print("REFRESH CODE EXPIRE ONE YEAR AS PASSED")
+    if time.time() > me.token['access_expires']:
+        api_requests.refresh_token()
+    p = class_json.player(bungie_name)
+
+    weapons, armors, others = get_inventory(p)
+    inventory = class_json.PlayerEquipment(p, weapons, armors, others)
+    embs = []
+    for weapon in weapons:
+        emb = discord.Embed(title="test", url="https://example.org/")
+        emb.add_field(value=weapon.shader, name="shader")
+        emb.set_image(url=f"{icon_root}{weapon.icon}")
+        embs.append(emb)
+
+    embs2 = []
+    for armor in armors:
+        emb = discord.Embed(title="test", url="https://example.org/")
+        emb.add_field(value=armor.shader, name="shader")
+        emb.set_image(url=f"{icon_root}{armor.icon}")
+        embs2.append(emb)
+
+    await msg.send(embeds=embs)
+    await msg.send(embeds=embs2)
