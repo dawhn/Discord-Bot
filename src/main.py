@@ -10,19 +10,17 @@ import logging
 
 # from imports
 from discord.ext import commands
-from discord_slash import SlashCommand
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 # file imports
-import api_requests
-import automatic_commands
-import server_application
+from destiny import automatic_commands, api_requests, server_application
 
 # from file imports
 from data import token, myBot
-from bot_commands import slash
-from manifest import vendor_dic, item_dic, location_dic
-from discord_features import check_default_channels
+from destiny.manifest import vendor_dic, item_dic, location_dic
+from destiny.discord_features import check_default_channels
+from poe.setup import setup_profile
+import bot_commands
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -50,7 +48,7 @@ def run_flask():
 @myBot.event
 async def on_message(msg):
     if msg.content.startswith("salut"):
-        await msg.channel.send("salu")
+        await msg.channel.send("salut")
     if msg.content.startswith("test"):
         for guild in myBot.guilds:
             print(guild)

@@ -2,6 +2,7 @@
 
 # imports
 import logging
+import os
 
 import time
 import requests
@@ -10,6 +11,7 @@ import flask
 
 # from imports
 from flask import Flask, request
+from tabulate import tabulate
 
 # file imports
 import data
@@ -90,6 +92,7 @@ def get_stored_informations(m=None):
         me.token['access_expires'] = df['access_expires']
         me.token['refresh_token'] = df['refresh_token']
         me.token['refresh_expires'] = df['refresh_expires']
+        print(f"server_application: {me.token}")
     return True
 
 

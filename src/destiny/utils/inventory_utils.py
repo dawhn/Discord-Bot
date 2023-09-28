@@ -1,8 +1,8 @@
-from src.classes.class_json import Weapon, Armor, Player, Perk
+from destiny.classes.class_json import Weapon, Armor, Player, Perk
 from src.data import root, my_api_key
-from src.manifest import item_dic
+from src.destiny.manifest import item_dic
 
-import src.server_application as server_application
+import src.destiny.server_application as server_application
 import requests
 
 access_token = "Bearer "

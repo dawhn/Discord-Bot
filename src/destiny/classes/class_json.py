@@ -6,12 +6,12 @@ from typing import Optional
 
 import discord
 import requests
-import src.embed as embed
+import src.destiny.embed as embed
 
 # from imports
 from enum import Enum
 
-from src import server_application
+from src.destiny import server_application
 from src.data import root, my_api_key
 
 access_token = "Bearer "
@@ -368,4 +368,4 @@ class ActivityHash:
     gos_hash = 2497200493
     dsc_hash = 910380154
     kf_hash = 1374392663
-    ron_hash = 2381413764
+    ron_hash = 1191701339

@@ -1,20 +1,19 @@
 # File containing every functions that are necessary to make API requests
-import json
 # imports
 import time
 import requests
 
 # file imports
-import embed
-import server_application
+import destiny.embed as embed
+from destiny import server_application
 
 # from file imports
 from data import my_api_key, root, icon_root
-from discord_features import check_xur
-from manifest import vendor_dic, item_dic, location_dic, perk_dic, activity_dic, activity_modifier_dic
-from api.perks_data import DestinyItemSubType, DestinyChallenges
-from classes.class_embed import WeeklyEmbed, WqMission, LfMission
-from classes.class_json import ActivityHash
+from destiny.discord_features import check_xur
+from destiny.manifest import vendor_dic, item_dic, location_dic, perk_dic, activity_dic, activity_modifier_dic
+from destiny.api.perks_data import DestinyItemSubType, DestinyChallenges
+from destiny.classes.class_embed import WeeklyEmbed, WqMission, LfMission
+from destiny.classes.class_json import ActivityHash
 
 access_token = 'Bearer '
 
@@ -41,6 +40,7 @@ def sales_vendor(name: str):
             print('wtf')
             return None
     me = server_application.me
+    print(me.token)
     if time.time() > me.token['access_expires']:
         refresh_token()
     vendor_hash, large_icon, original_icon, destinations = get_vendor(name)

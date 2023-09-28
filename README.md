@@ -45,3 +45,6 @@ Every secret token or just some usefull data is in data.py (not in this reposito
 - Only the activity's author or an admin can delete the activity, anyone else will receive a hidden message telling them they cannot.
 - Changed automatic weekly to not have any buttons (in order to allow anyone to have the information they are looking for)
 - Begined changed to create a backend server as well as a fronted in JavaScript which will allow to create a cleaner representation of the data.
+
+### Fix starting issues
+- If the authorization cods is not valid anymore. Delete the data.csv file and restart the bot. It will ask for a new authorization code (that you'll have to authorize on the bungie webpage) and will work again.

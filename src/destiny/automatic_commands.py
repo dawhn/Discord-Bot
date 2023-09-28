@@ -14,11 +14,11 @@ from discord_slash.utils.manage_components import create_button, create_actionro
 from promise import Promise
 
 # file imports
-import api_requests
+import destiny.api_requests
 
 # from file imports
 from data import myBot
-from discord_features import check_xur
+from destiny.discord_features import check_xur
 
 vendor_embeds = []
 weekly_embeds = []
@@ -58,7 +58,7 @@ async def auto():
     """
 
     chans = []
-    df = pd.read_csv('../guilds.csv')
+    df = pd.read_csv('../../guilds.csv')
     for chan in df['channel']:
         new_chan = myBot.get_channel(int(chan))
         chans.append(new_chan)

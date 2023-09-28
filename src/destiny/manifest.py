@@ -66,7 +66,8 @@ def get_manifest():
         name = zip.namelist()
         zip.extractall()
     print(name[0])
-    os.replace(name[0], '../pickle/Manifest.content')
+    print(os.getcwd())
+    os.replace(name[0], 'destiny/pickle/Manifest.content')
     os.remove('MANZIP')
     print('Unzipped')
 
@@ -78,7 +79,7 @@ def build_dict(hash_dict):
     :return: a dictionary with every hash : object as items
     """
 
-    con = sqlite3.connect('../pickle/manifest.content')
+    con = sqlite3.connect('destiny/pickle/Manifest.content')
     print('Connected')
     # create a cursor object
     cur = con.cursor()
@@ -139,7 +140,7 @@ def vendor_dic():
     :return: a dictionary with the information from the manifest about DestinyVendorDefinition
     """
 
-    return dic(r'../pickle/manifest_vendor.pickle', hash_vendor)
+    return dic(r'destiny/pickle/manifest_vendor.pickle', hash_vendor)
 
 
 def item_dic():
@@ -148,7 +149,7 @@ def item_dic():
     :return: a dictionary with the information from the manifest about DestinyInventoryItemDefinition
     """
 
-    return dic(r'../pickle/manifest_item.pickle', hash_item)
+    return dic(r'destiny/pickle/manifest_item.pickle', hash_item)
 
 
 def perk_dic():
@@ -158,7 +159,7 @@ def perk_dic():
     DestinySandBoxPerkDefinition and DestinySandBoxPerkDefinition
     """
 
-    return dic(r'../pickle/manifest_perk.pickle', hash_perk)
+    return dic(r'destiny/pickle/manifest_perk.pickle', hash_perk)
 
 
 def location_dic():
@@ -168,7 +169,7 @@ def location_dic():
     DestinyLocationDefinition and DestinyDestinationDefinition
     """
 
-    return dic(r'../pickle/manifest_location.pickle', hash_location)
+    return dic(r'destiny/pickle/manifest_location.pickle', hash_location)
 
 
 def item_type():
@@ -177,7 +178,7 @@ def item_type():
     :return: a dictionary with the information from the manifest about DestinyItemSubType
     """
 
-    return dic(r'../pickle/manifest_item_type.pickle', hash_sub_type)
+    return dic(r'destiny/pickle/manifest_item_type.pickle', hash_sub_type)
 
 
 def activity_dic():
@@ -186,8 +187,8 @@ def activity_dic():
     :return: a dictionary with the information from the manifest about DestinyActivityDefinition
     """
 
-    return dic(r'../pickle/manifest_activity.pickle', hash_activity)
+    return dic(r'destiny/pickle/manifest_activity.pickle', hash_activity)
 
 
 def activity_modifier_dic():
-    return dic(r'../pickle/manifest_activity_modifier.pickle', hash_activity_modifier)
+    return dic(r'destiny/pickle/manifest_activity_modifier.pickle', hash_activity_modifier)

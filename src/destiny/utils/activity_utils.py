@@ -1,9 +1,9 @@
-from src.classes.class_json import Player
+from destiny.classes.class_json import Player
 from src.data import root, my_api_key
-from src.manifest import activity_dic
-from src.classes.class_json import get_all_deleted_char
+from src.destiny.manifest import activity_dic
+from destiny.classes.class_json import get_all_deleted_char
 
-import src.server_application as server_application
+import src.destiny.server_application as server_application
 import requests
 
 access_token = "Bearer "

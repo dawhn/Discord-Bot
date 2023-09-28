@@ -47,6 +47,8 @@ strikes = {
     "Birthplace of the Vile": "https://media.discordapp.net/attachments/963544576193355837/973622259325485116/unknown.png?width=1116&height=570",
     "PsiOps Battleground: Moon": "https://media.discordapp.net/attachments/963544576193355837/1125743686144229456/battleground_trespass_s16.png?width=1046&height=588",
     "PsiOps Battleground: Cosmodrome": "https://media.discordapp.net/attachments/963544576193355837/1125743970228645888/battleground_nestegg_s16.png?width=1046&height=588",
-    "PsiOps Battleground: EDZ": "https://media.discordapp.net/attachments/963544576193355837/1125744092232564856/battleground_chainsaw_s16.png?width=1046&height=588"
-
+    "PsiOps Battleground: EDZ": "https://media.discordapp.net/attachments/963544576193355837/1125744092232564856/battleground_chainsaw_s16.png?width=1046&height=588",
+    "Heist Battleground: Europa": "https://www.bungie.net/img/destiny_content/pgcr/season_19_battleground_europa.jpg",
+    "Heist Battleground: Mars": "https://www.bungie.net/img/destiny_content/pgcr/season_19_battleground_polaris.jpg",
+    "Heist Battleground: Moon": "https://www.bungie.net/img/destiny_content/pgcr/season_19_battleground_luna.jpg"
 }

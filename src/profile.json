@@ -1,0 +1,625 @@
+{
+    "uuid": "580bcabc-c7b7-4ea3-a5be-d06bf8cbdf13",
+    "name": "DarkFlash91",
+    "realm": "pc",
+    "locale": null,
+    "guild": {
+        "name": "watidev"
+    },
+    "twitch": {
+        "name": "dawwhn"
+    },
+    "characters": [
+        {
+            "name": "Dawhnts",
+            "league": "Ancestor",
+            "class_": "Deadeye",
+            "level": 99,
+            "equipment": {
+                "items": [
+                    {
+                        "influences": null,
+                        "name": "Progenesis",
+                        "baseType": "Amethyst Flask",
+                        "itemLvl": 75,
+                        "icon": "https://web.poecdn.com/gen/image/WzksMTQseyJmIjoiMkRJdGVtcy9GbGFza3MvVWJlck1hdmVuRmxhc2siLCJ3IjoxLCJoIjoyLCJzY2FsZSI6MSwibGV2ZWwiOjEsImZpIjp0cnVlLCJyZWxpYyI6Nn1d/cf90ccedde/UberMavenFlask.png",
+                        "implicitMods": null,
+                        "explicitMods": [
+                            "17% reduced Charges per use",
+                            "22% increased Duration",
+                            "When Hit during effect, 25% of Life loss from Damage taken occurs over 4 seconds instead"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": [
+                            "Used when Charges reach full"
+                        ],
+                        "corrupt": null,
+                        "flavourText": [
+                            "They were bred in a cosmic ocean of raw creation.\r",
+                            "Feasting and drinking of the milk of the mother,\r",
+                            "they fought to the death for every last drop."
+                        ]
+                    },
+                    {
+                        "influences": null,
+                        "name": "",
+                        "baseType": "Gold Flask",
+                        "itemLvl": 84,
+                        "icon": "https://web.poecdn.com/gen/image/WzksMTQseyJmIjoiMkRJdGVtcy9GbGFza3MvR29sZEZsYXNrIiwidyI6MSwiaCI6Miwic2NhbGUiOjEsImxldmVsIjoxLCJmaSI6dHJ1ZX1d/f389ac23be/GoldFlask.png",
+                        "implicitMods": null,
+                        "explicitMods": [
+                            "Gain 2 Charges when you are Hit by an Enemy"
+                        ],
+                        "craftedMods": [
+                            "27% increased Rarity of Items found during Effect"
+                        ],
+                        "enchantMods": [
+                            "Used when Charges reach full"
+                        ],
+                        "corrupt": null,
+                        "flavourText": null
+                    },
+                    {
+                        "influences": null,
+                        "name": "Bisco's Leash",
+                        "baseType": "Heavy Belt",
+                        "itemLvl": 78,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQmVsdHMvQmlzY29zTGVhc2giLCJ3IjoyLCJoIjoxLCJzY2FsZSI6MX1d/87b17c98e7/BiscosLeash.png",
+                        "implicitMods": [
+                            "+35 to Strength"
+                        ],
+                        "explicitMods": [
+                            "5% increased Quantity of Items found",
+                            "+34% to Cold Resistance",
+                            "1% increased Rarity of Items found per 15 Rampage Kills",
+                            "Rampage"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": null,
+                        "corrupt": null,
+                        "flavourText": [
+                            "You were always there, by my side,\r",
+                            "whether we sat or played.\r",
+                            "Our friendship was a joyful ride,\r",
+                            "I wish you could have stayed."
+                        ]
+                    },
+                    {
+                        "influences": null,
+                        "name": "",
+                        "baseType": "Serrated Arrow Quiver",
+                        "itemLvl": 83,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvUXVpdmVycy9RdWl2ZXJTZXJyYXRlZCIsInciOjIsImgiOjMsInNjYWxlIjoxfV0/3660315ba6/QuiverSerrated.png",
+                        "implicitMods": [
+                            "Arrows Chain +1 times"
+                        ],
+                        "explicitMods": null,
+                        "craftedMods": null,
+                        "enchantMods": null,
+                        "corrupt": true,
+                        "flavourText": null
+                    },
+                    {
+                        "influences": null,
+                        "name": "",
+                        "baseType": "Quicksilver Flask",
+                        "itemLvl": 15,
+                        "icon": "https://web.poecdn.com/gen/image/WzksMTQseyJmIjoiMkRJdGVtcy9GbGFza3Mvc3ByaW50IiwidyI6MSwiaCI6Miwic2NhbGUiOjEsImxldmVsIjoxLCJmaSI6dHJ1ZX1d/3f8edd74f2/sprint.png",
+                        "implicitMods": null,
+                        "explicitMods": [
+                            "13% chance to gain a Flask Charge when you deal a Critical Strike",
+                            "11% increased Attack Speed during Effect"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": [
+                            "Used when Charges reach full"
+                        ],
+                        "corrupt": null,
+                        "flavourText": null
+                    },
+                    {
+                        "influences": null,
+                        "name": "Maloney's Mechanism",
+                        "baseType": "Ornate Quiver",
+                        "itemLvl": 85,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvUXVpdmVycy9UcmlnZ2VyUXVpdmVyQmFzZSIsInciOjIsImgiOjMsInNjYWxlIjoxfV0/1f3958bdb3/TriggerQuiverBase.png",
+                        "implicitMods": [
+                            "Has 1 Socket"
+                        ],
+                        "explicitMods": [
+                            "Has 2 Sockets",
+                            "Trigger a Socketed Bow Skill when you Attack with a Bow, with a 1 second Cooldown",
+                            "8% increased Attack Speed",
+                            "+66 to maximum Life",
+                            "5% chance to Blind Enemies on Hit with Attacks"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": null,
+                        "corrupt": null,
+                        "flavourText": [
+                            "Midnight tinkering begets midday murdering;\r",
+                            "a sinister shaft surreptitiously shot slays a scoundrel.\r",
+                            "I will see them again, but not until my work is done."
+                        ]
+                    },
+                    {
+                        "influences": null,
+                        "name": "",
+                        "baseType": "Assassin Bow",
+                        "itemLvl": 80,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9Cb3dzL0JvdzUiLCJ3IjoyLCJoIjo0LCJzY2FsZSI6MX1d/2c90c93faf/Bow5.png",
+                        "implicitMods": [
+                            "+20% to Global Critical Strike Multiplier"
+                        ],
+                        "explicitMods": [
+                            "+14% to Lightning Resistance"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": null,
+                        "corrupt": null,
+                        "flavourText": null
+                    },
+                    {
+                        "influences": null,
+                        "name": "",
+                        "baseType": "Diamond Flask",
+                        "itemLvl": 50,
+                        "icon": "https://web.poecdn.com/gen/image/WzksMTQseyJmIjoiMkRJdGVtcy9GbGFza3MvZGlhbW9uZCIsInciOjEsImgiOjIsInNjYWxlIjoxLCJsZXZlbCI6MSwiZmkiOnRydWV9XQ/a764b9bc68/diamond.png",
+                        "implicitMods": null,
+                        "explicitMods": [
+                            "26% increased Charge Recovery",
+                            "39% increased Critical Strike Chance during Effect"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": [
+                            "Used when Charges reach full"
+                        ],
+                        "corrupt": null,
+                        "flavourText": null
+                    },
+                    {
+                        "influences": null,
+                        "name": "The Ascetic",
+                        "baseType": "Gold Amulet",
+                        "itemLvl": 85,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQW11bGV0cy9BbXVsZXQxMyIsInciOjEsImgiOjEsInNjYWxlIjoxfV0/8dd083062d/Amulet13.png",
+                        "implicitMods": [
+                            "20% increased Rarity of Items found"
+                        ],
+                        "explicitMods": [
+                            "96% increased Rarity of Items found with a Normal Item Equipped",
+                            "15% increased Quantity of Items found with a Magic Item Equipped"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": [
+                            "Allocates Graceful Assault"
+                        ],
+                        "corrupt": null,
+                        "flavourText": [
+                            "Many things come to one who has nothing."
+                        ]
+                    },
+                    {
+                        "influences": null,
+                        "name": "Kaom's Spirit",
+                        "baseType": "Titan Gauntlets",
+                        "itemLvl": 83,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9HbG92ZXMvS2FvbXNTcGlyaXQiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MX1d/eefa7c48f9/KaomsSpirit.png",
+                        "implicitMods": [
+                            "Attacks have +0.7% to Critical Strike Chance"
+                        ],
+                        "explicitMods": [
+                            "+57 to maximum Life",
+                            "+21% to Fire Resistance",
+                            "0.31% of Physical Attack Damage Leeched as Life",
+                            "Life Recovery from Regeneration is not applied",
+                            "Regenerate 1 Rage per second for every 100 Life Recovery per second from Regeneration"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": null,
+                        "corrupt": true,
+                        "flavourText": [
+                            "Who can tell when whispers are truly from a god?"
+                        ]
+                    },
+                    {
+                        "influences": null,
+                        "name": "",
+                        "baseType": "Necromancer Circlet",
+                        "itemLvl": 79,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9IZWxtZXRzL0hlbG1ldEludDgiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MSwic2VhcmluZyI6dHJ1ZSwidGFuZ2xlZCI6dHJ1ZX1d/9ec428a948/HelmetInt8.png",
+                        "implicitMods": [
+                            "8% increased Mana Reservation Efficiency of Skills",
+                            "24% reduced Mana Cost of Attacks"
+                        ],
+                        "explicitMods": [
+                            "24% increased Rarity of Items found"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": [
+                            "Tornado Shot fires an additional secondary Projectile"
+                        ],
+                        "corrupt": null,
+                        "flavourText": null
+                    },
+                    {
+                        "influences": null,
+                        "name": "Cataclysm Bane",
+                        "baseType": "Ivory Bow",
+                        "itemLvl": 78,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvV2VhcG9ucy9Ud29IYW5kV2VhcG9ucy9Cb3dzL0JvdzYiLCJ3IjoyLCJoIjo0LCJzY2FsZSI6MSwiZnJhY3R1cmVkIjp0cnVlfV0/250dc2bbe7/Bow6.png",
+                        "implicitMods": null,
+                        "explicitMods": [
+                            "Adds 157 to 328 Fire Damage",
+                            "Adds 138 to 262 Cold Damage",
+                            "13% increased Attack Speed",
+                            "Bow Attacks fire an additional Arrow"
+                        ],
+                        "craftedMods": [
+                            "+24 to Strength and Intelligence",
+                            "25% increased Critical Strike Chance"
+                        ],
+                        "enchantMods": [
+                            "Quality does not increase Physical Damage",
+                            "1% increased Attack Speed per 8% Quality"
+                        ],
+                        "corrupt": null,
+                        "flavourText": null
+                    },
+                    {
+                        "influences": null,
+                        "name": "Greed's Embrace",
+                        "baseType": "Golden Plate",
+                        "itemLvl": 85,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9HcmVlZHNFbWJyYWNlIiwidyI6MiwiaCI6Mywic2NhbGUiOjF9XQ/0e8984128f/GreedsEmbrace.png",
+                        "implicitMods": null,
+                        "explicitMods": [
+                            "30% reduced Strength Requirement",
+                            "15% increased Quantity of Items found",
+                            "46% increased Rarity of Items found",
+                            "-10% to Fire Resistance",
+                            "+27% to Cold Resistance",
+                            "-20% to Lightning Resistance",
+                            "20% reduced Movement Speed"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": null,
+                        "corrupt": null,
+                        "flavourText": [
+                            "Some would question if the risk was worth it.\r",
+                            "The rest were already dead."
+                        ]
+                    },
+                    {
+                        "influences": null,
+                        "name": "Divination Distillate",
+                        "baseType": "Large Hybrid Flask",
+                        "itemLvl": 83,
+                        "icon": "https://web.poecdn.com/gen/image/WzksMTQseyJmIjoiMkRJdGVtcy9GbGFza3MveUZsYXNrczE3IiwidyI6MSwiaCI6Miwic2NhbGUiOjEsImxldmVsIjoxfV0/df28fc612b/yFlasks17.png",
+                        "implicitMods": null,
+                        "explicitMods": [
+                            "12% increased Quantity of Items found during Effect",
+                            "28% increased Rarity of Items found during Effect",
+                            "25% increased Light Radius during Effect",
+                            "+50% to Elemental Resistances during Effect"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": null,
+                        "corrupt": null,
+                        "flavourText": [
+                            "Knowledge is fermented in pain and loss\r",
+                            "Distilled with reflection\r",
+                            "To quench the thirst of those\r",
+                            "who dream of enlightenment"
+                        ]
+                    },
+                    {
+                        "influences": null,
+                        "name": "Death Rush",
+                        "baseType": "Amethyst Ring",
+                        "itemLvl": 83,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvUmluZ3MvQW1ldGh5c3RSaW5nVW5pcXVlIiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/1ade97e0ac/AmethystRingUnique.png",
+                        "implicitMods": [
+                            "+23% to Chaos Resistance"
+                        ],
+                        "explicitMods": [
+                            "Recover 4% of Life on Kill",
+                            "Gain Adrenaline for 3 seconds on kill"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": null,
+                        "corrupt": null,
+                        "flavourText": [
+                            "To truly appreciate life you must be there when it ends"
+                        ]
+                    },
+                    {
+                        "influences": null,
+                        "name": "Goldwyrm",
+                        "baseType": "Nubuck Boots",
+                        "itemLvl": 75,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb290cy9Cb290c0RleFVuaXF1ZTIiLCJ3IjoyLCJoIjoyLCJzY2FsZSI6MSwicmVsaWMiOjZ9XQ/33fe182adf/BootsDexUnique2.png",
+                        "implicitMods": null,
+                        "explicitMods": [
+                            "60% increased Mana Regeneration Rate",
+                            "17% increased Quantity of Items found",
+                            "+46% to Fire Resistance",
+                            "10% increased Movement Speed"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": null,
+                        "corrupt": null,
+                        "flavourText": [
+                            "The wyrm draws warmth from the fires of desire."
+                        ]
+                    },
+                    {
+                        "influences": null,
+                        "name": "Ventor's Gamble",
+                        "baseType": "Gold Ring",
+                        "itemLvl": 79,
+                        "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvUmluZ3MvRGllT2ZEZXN0aW55IiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/1470dfcdce/DieOfDestiny.png",
+                        "implicitMods": [
+                            "15% increased Rarity of Items found"
+                        ],
+                        "explicitMods": [
+                            "+55 to maximum Life",
+                            "10% increased Quantity of Items found",
+                            "37% increased Rarity of Items found",
+                            "-14% to Fire Resistance",
+                            "+20% to Cold Resistance",
+                            "-13% to Lightning Resistance"
+                        ],
+                        "craftedMods": null,
+                        "enchantMods": null,
+                        "corrupt": null,
+                        "flavourText": [
+                            "In a blaze of glory,\r",
+                            "An anomaly defying all odds\r",
+                            "The \"unkillable\" beast met the divine\r",
+                            "And Ventor met his latest trophy."
+                        ]
+                    }
+                ]
+            },
+            "inventory": {
+                "items": []
+            }
+        }
+    ],
+    "character_names": [
+        "Dawhnts"
+    ],
+    "stashes": [
+        {
+            "id": "bd3dec8b4a",
+            "name": "$ Money $",
+            "type": "CurrencyStash",
+            "index": 0,
+            "metadata": {
+                "colour": "ffaa00"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "e1111bae8e",
+            "name": "Maps",
+            "type": "MapStash",
+            "index": 1,
+            "metadata": {
+                "colour": "dddddd",
+                "map": {
+                    "series": 21
+                }
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "a7d51167bf",
+            "name": "Essences",
+            "type": "EssenceStash",
+            "index": 2,
+            "metadata": {
+                "colour": "80b3ff"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "d8b1ce3ca5",
+            "name": "Fragment",
+            "type": "FragmentStash",
+            "index": 3,
+            "metadata": {
+                "colour": "2c0059"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "1beb4d4d59",
+            "name": "Delirium",
+            "type": "DeliriumStash",
+            "index": 4,
+            "metadata": {
+                "colour": "323232"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "435c1cf3d9",
+            "name": "sell tab",
+            "type": "PremiumStash",
+            "index": 5,
+            "metadata": {
+                "public": true,
+                "colour": "bf0000"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "43fbb4f38b",
+            "name": "1",
+            "type": "NormalStash",
+            "index": 6,
+            "metadata": {
+                "colour": "7c5436"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "55848afea4",
+            "name": "2",
+            "type": "NormalStash",
+            "index": 7,
+            "metadata": {
+                "colour": "7c5436"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "50ecadc043",
+            "name": "3",
+            "type": "NormalStash",
+            "index": 8,
+            "metadata": {
+                "colour": "7c5436"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "4cf842feaf",
+            "name": "4",
+            "type": "NormalStash",
+            "index": 9,
+            "metadata": {
+                "colour": "7c5436"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "9a404b96fb",
+            "name": "7",
+            "type": "NormalStash",
+            "index": 10,
+            "metadata": {
+                "colour": "7c5436"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "33bfc91b6c",
+            "name": "Div",
+            "type": "DivinationCardStash",
+            "index": 11,
+            "metadata": {
+                "colour": "590000"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "35b5874e57",
+            "name": "Oil",
+            "type": "BlightStash",
+            "index": 12,
+            "metadata": {
+                "colour": "bff500"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "b7f491ca23",
+            "name": "gemmes",
+            "type": "PremiumStash",
+            "index": 13,
+            "metadata": {
+                "colour": "bf00"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        },
+        {
+            "id": "cc1cb98ea1",
+            "name": "Keep",
+            "type": "PremiumStash",
+            "index": 14,
+            "metadata": {
+                "colour": "cc009a"
+            },
+            "details": {
+                "error": {
+                    "code": 3,
+                    "message": "Rate limit exceeded"
+                }
+            }
+        }
+    ],
+    "current_league": "Ancestor"
+}

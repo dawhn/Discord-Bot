@@ -131,7 +131,7 @@ dmypy.json
 # Others
 MANZIP
 cert/*
-pickle/Manifest.content
+src/destiny/pickle/Manifest.content
 *.csv
 *.pickle
 .idea/
